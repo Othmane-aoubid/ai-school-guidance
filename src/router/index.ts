@@ -9,6 +9,7 @@ import AnalyticsView from '../views/AnalyticsView.vue';
 import CareermatchingView from '../views/CareermatchingView.vue';
 import UsersView from '../views/UsersView.vue';
 import SettingsView from '../views/SettingsView.vue';
+import AichatsupportView from '../views/AichatsupportView.vue';
 
 const routes = [
   // Public routes
@@ -47,6 +48,12 @@ const routes = [
     path: '/CareerMatching',
     name: 'Career Matching',
     component: CareermatchingView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/Aichatsupport',
+    name: 'Ai Chat Support',
+    component: AichatsupportView,
     meta: { requiresAuth: true },
   },
   {

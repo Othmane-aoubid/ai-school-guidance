@@ -54,6 +54,7 @@ const navigation = [
   { name: 'Dashboard', icon: HomeIcon, path: '/dashboard' },
   { name: 'Analytics', icon: ChartBarIcon, path: '/analytics' },
   { name: 'Career Matching', icon: ChartBarIcon, path: '/CareerMatching' },
+  { name: 'Ai Chat Support', icon: ChartBarIcon, path: '/Aichatsupport' },
   { name: 'Users', icon: UsersIcon, path: '/users' },
   { name: 'Settings', icon: CogIcon, path: '/settings' },
 ];
