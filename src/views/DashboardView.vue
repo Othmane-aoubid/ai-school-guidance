@@ -3,44 +3,50 @@
     <Sidebar />
     <div class="flex-1 flex flex-col overflow-hidden">
       <TopNavigation />
-      <main class="flex-1 overflow-auto p-6">
-        <div class="space-y-6">
-          <h1 class="text-2xl font-semibold text-gray-900">Dashboard Overview</h1>
-          
-          <!-- Stats Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div
-              v-for="stat in stats"
-              :key="stat.name"
-              class="bg-white p-6 rounded-lg shadow-sm"
-            >
-              <div class="flex items-center">
-                <div class="flex-1">
-                  <p class="text-sm font-medium text-gray-600">{{ stat.name }}</p>
-                  <p class="mt-1 text-xl font-semibold text-gray-900">{{ stat.value }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Charts Section -->
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-lg font-medium text-gray-900 mb-4">Weekly Revenue</h3>
-              <div class="h-64 bg-gray-50 rounded flex items-center justify-center">
-                <p class="text-gray-500">Revenue Chart Placeholder</p>
-              </div>
-            </div>
-            
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-              <h3 class="text-lg font-medium text-gray-900 mb-4">User Growth</h3>
-              <div class="h-64 bg-gray-50 rounded flex items-center justify-center">
-                <p class="text-gray-500">User Growth Chart Placeholder</p>
+      <main class="flex-1 p-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <StatCard 
+          title="Total Revenue" 
+          value="$45,231" 
+          change="+20.1%" 
+          trend="up" 
+        />
+        <StatCard 
+          title="Active Users" 
+          value="2,345" 
+          change="+15.2%" 
+          trend="up" 
+        />
+        <StatCard 
+          title="Conversion Rate" 
+          value="3.15%" 
+          change="-2.1%" 
+          trend="down" 
+        />
+        <StatCard 
+          title="Avg. Order Value" 
+          value="$89.43" 
+          change="+10.3%" 
+          trend="up" 
+        />
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Chart />
+        <div class="card">
+          <h3 class="text-gray-500 text-sm font-medium mb-4">Recent Activity</h3>
+          <div class="space-y-4">
+            <div v-for="i in 4" :key="i" class="flex items-center">
+              <div class="w-8 h-8 rounded-full bg-gray-200"></div>
+              <div class="ml-4">
+                <p class="text-sm font-medium text-gray-900">User Activity {{ i }}</p>
+                <p class="text-sm text-gray-500">2 minutes ago</p>
               </div>
             </div>
           </div>
         </div>
-      </main>
+      </div>
+    </main>
     </div>
   </div>
 </template>
@@ -50,6 +56,8 @@ import { ref, onMounted } from 'vue';
 
 import Sidebar from '../components/Sidebar.vue';
 import TopNavigation from '../components/TopNavigation.vue';
+import Chart from '../components/Chart.vue';
+import StatCard from '../components/StatCard.vue'
 
 const stats = ref([
   { name: 'Total Users', value: '0', icon: 'users' },
