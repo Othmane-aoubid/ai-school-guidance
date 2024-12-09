@@ -6,6 +6,7 @@ import RegisterView from '../views/RegisterView.vue';
 import LandingPage from '../views/HomeView.vue';
 import DashboardView from '../views/DashboardView.vue';
 import AnalyticsView from '../views/AnalyticsView.vue';
+import CareermatchingView from '../views/CareermatchingView.vue';
 import UsersView from '../views/UsersView.vue';
 import SettingsView from '../views/SettingsView.vue';
 
@@ -40,6 +41,12 @@ const routes = [
     path: '/analytics',
     name: 'Analytics',
     component: AnalyticsView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/CareerMatching',
+    name: 'Career Matching',
+    component: CareermatchingView,
     meta: { requiresAuth: true },
   },
   {

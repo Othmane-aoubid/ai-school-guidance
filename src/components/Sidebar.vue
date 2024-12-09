@@ -53,6 +53,7 @@ const isCollapsed = ref(false);
 const navigation = [
   { name: 'Dashboard', icon: HomeIcon, path: '/dashboard' },
   { name: 'Analytics', icon: ChartBarIcon, path: '/analytics' },
+  { name: 'Career Matching', icon: ChartBarIcon, path: '/CareerMatching' },
   { name: 'Users', icon: UsersIcon, path: '/users' },
   { name: 'Settings', icon: CogIcon, path: '/settings' },
 ];
