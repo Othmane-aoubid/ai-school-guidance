@@ -1,26 +1,9 @@
-<script setup lang="ts">
-import { ref, onMounted } from 'vue';
-
-const metrics = ref([
-  { name: 'Page Views', value: '0', change: '+0%' },
-  { name: 'Bounce Rate', value: '0%', change: '0%' },
-  { name: 'Average Session', value: '0m', change: '0%' },
-  { name: 'Conversion Rate', value: '0%', change: '0%' }
-]);
-
-onMounted(() => {
-  // Simulated analytics data
-  metrics.value = [
-    { name: 'Page Views', value: '45,232', change: '+23%' },
-    { name: 'Bounce Rate', value: '32%', change: '-12%' },
-    { name: 'Average Session', value: '4m 23s', change: '+8%' },
-    { name: 'Conversion Rate', value: '3.2%', change: '+14%' }
-  ];
-});
-</script>
-
 <template>
-  <div class="space-y-6">
+  <div class="flex h-screen bg-gray-100">
+    <Sidebar />
+    <div class="flex-1 flex flex-col overflow-hidden">
+      <TopNavigation />
+  <div class="space-y-6 px-3">
     <h1 class="text-2xl font-semibold text-gray-900">Analytics</h1>
 
     <!-- Metrics Grid -->
@@ -58,4 +41,28 @@ onMounted(() => {
       </div>
     </div>
   </div>
+  </div>
+  </div>
 </template>
+
+<script setup >
+import { ref, onMounted } from 'vue';
+import Sidebar from '../components/Sidebar.vue';
+import TopNavigation from '../components/TopNavigation.vue';
+const metrics = ref([
+  { name: 'Page Views', value: '0', change: '+0%' },
+  { name: 'Bounce Rate', value: '0%', change: '0%' },
+  { name: 'Average Session', value: '0m', change: '0%' },
+  { name: 'Conversion Rate', value: '0%', change: '0%' }
+]);
+
+onMounted(() => {
+  // Simulated analytics data
+  metrics.value = [
+    { name: 'Page Views', value: '45,232', change: '+23%' },
+    { name: 'Bounce Rate', value: '32%', change: '-12%' },
+    { name: 'Average Session', value: '4m 23s', change: '+8%' },
+    { name: 'Conversion Rate', value: '3.2%', change: '+14%' }
+  ];
+});
+</script>

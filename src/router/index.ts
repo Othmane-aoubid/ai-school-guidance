@@ -37,19 +37,19 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: '/dashboard/analytics',
+    path: '/analytics',
     name: 'Analytics',
     component: AnalyticsView,
     meta: { requiresAuth: true },
   },
   {
-    path: '/dashboard/users',
+    path: '/users',
     name: 'Users',
     component: UsersView,
     meta: { requiresAuth: true },
   },
   {
-    path: '/dashboard/settings',
+    path: '/settings',
     name: 'Settings',
     component: SettingsView,
     meta: { requiresAuth: true },

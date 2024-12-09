@@ -1,5 +1,9 @@
 <template>
-  <div class="space-y-6">
+  <div class="flex h-screen bg-gray-100">
+    <Sidebar />
+    <div class="flex-1 flex flex-col overflow-hidden">
+      <TopNavigation />
+  <div class="space-y-6 px-3">
     <h1 class="text-2xl font-semibold text-gray-900">Settings</h1>
 
     <div class="bg-white rounded-lg shadow-sm">
@@ -77,12 +81,15 @@
       </div>
     </div>
   </div>
+</div>
+</div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useAuthStore } from '../stores/auth';
-
+import Sidebar from '../components/Sidebar.vue';
+import TopNavigation from '../components/TopNavigation.vue';
 const authStore = useAuthStore();
 const currentSettings = ref({
   notifications: true,

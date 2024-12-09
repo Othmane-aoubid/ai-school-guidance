@@ -1,5 +1,9 @@
 <template>
-  <div class="space-y-6">
+  <div class="flex h-screen bg-gray-100">
+    <Sidebar />
+    <div class="flex-1 flex flex-col overflow-hidden">
+      <TopNavigation />
+  <div class="space-y-6 px-3">
     <div class="flex justify-between items-center">
       <h1 class="text-2xl font-semibold text-gray-900">Users</h1>
       <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90">
@@ -53,11 +57,14 @@
       </table>
     </div>
   </div>
+</div>
+</div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-
+import Sidebar from '../components/Sidebar.vue';
+import TopNavigation from '../components/TopNavigation.vue';
 
 interface User {
   id: string;
