@@ -61,21 +61,12 @@
 </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted } from 'vue';
 import Sidebar from '../components/Sidebar.vue';
 import TopNavigation from '../components/TopNavigation.vue';
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  status: string;
-  lastActive: string;
-}
-
-const users = ref<User[]>([]);
+const users = ref([]);
 const loading = ref(true);
 
 onMounted(async () => {
