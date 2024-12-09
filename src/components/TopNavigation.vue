@@ -71,16 +71,18 @@
 </template>
 
 
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue';
+import { useRouter } from "vue-router";
 import { 
   BellIcon, 
   MagnifyingGlassIcon,
   UserCircleIcon
 } from '@heroicons/vue/24/outline';
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
-import { useAuthStore } from '../../stores/auth';
+import { useAuthStore } from '../stores/auth';
 
+const router = useRouter();
 const authStore = useAuthStore();
 const searchQuery = ref('');
 const notifications = ref([
@@ -89,6 +91,8 @@ const notifications = ref([
 ]);
 
 const handleLogout = async () => {
+  localStorage.setItem("isAuthenticated", "false");
+  router.push("/");
   await authStore.signOut();
 };
 </script>

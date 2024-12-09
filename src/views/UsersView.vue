@@ -1,44 +1,3 @@
-<script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase/config';
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  status: string;
-  lastActive: string;
-}
-
-const users = ref<User[]>([]);
-const loading = ref(true);
-
-onMounted(async () => {
-  // Simulated user data - replace with actual Firebase query
-  users.value = [
-    {
-      id: '1',
-      name: 'John Doe',
-      email: 'john@example.com',
-      role: 'Admin',
-      status: 'Active',
-      lastActive: '2024-02-20'
-    },
-    {
-      id: '2',
-      name: 'Jane Smith',
-      email: 'jane@example.com',
-      role: 'User',
-      status: 'Active',
-      lastActive: '2024-02-19'
-    }
-  ];
-  loading.value = false;
-});
-</script>
-
 <template>
   <div class="space-y-6">
     <div class="flex justify-between items-center">
@@ -95,3 +54,43 @@ onMounted(async () => {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+  lastActive: string;
+}
+
+const users = ref<User[]>([]);
+const loading = ref(true);
+
+onMounted(async () => {
+  // Simulated user data - replace with actual Firebase query
+  users.value = [
+    {
+      id: '1',
+      name: 'John Doe',
+      email: 'john@example.com',
+      role: 'Admin',
+      status: 'Active',
+      lastActive: '2024-02-20'
+    },
+    {
+      id: '2',
+      name: 'Jane Smith',
+      email: 'jane@example.com',
+      role: 'User',
+      status: 'Active',
+      lastActive: '2024-02-19'
+    }
+  ];
+  loading.value = false;
+});
+</script>

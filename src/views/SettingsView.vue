@@ -1,27 +1,3 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-import { useAuthStore } from '../stores/auth';
-
-const authStore = useAuthStore();
-const currentSettings = ref({
-  notifications: true,
-  emailUpdates: false,
-  darkMode: false,
-  language: 'en'
-});
-
-const languages = [
-  { value: 'en', label: 'English' },
-  { value: 'es', label: 'Spanish' },
-  { value: 'fr', label: 'French' }
-];
-
-const saveSettings = () => {
-  // Implement settings save functionality
-  console.log('Settings saved:', currentSettings.value);
-};
-</script>
-
 <template>
   <div class="space-y-6">
     <h1 class="text-2xl font-semibold text-gray-900">Settings</h1>
@@ -102,3 +78,27 @@ const saveSettings = () => {
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { useAuthStore } from '../stores/auth';
+
+const authStore = useAuthStore();
+const currentSettings = ref({
+  notifications: true,
+  emailUpdates: false,
+  darkMode: false,
+  language: 'en'
+});
+
+const languages = [
+  { value: 'en', label: 'English' },
+  { value: 'es', label: 'Spanish' },
+  { value: 'fr', label: 'French' }
+];
+
+const saveSettings = () => {
+  // Implement settings save functionality
+  console.log('Settings saved:', currentSettings.value);
+};
+</script>
