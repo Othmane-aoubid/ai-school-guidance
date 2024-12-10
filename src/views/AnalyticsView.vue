@@ -7,7 +7,7 @@
 
         <Studentanalytics />
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <LineChart />
           <BarChart />
         </div>
@@ -20,7 +20,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <UserFeedback />
           <QuestionnaireForm />
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
