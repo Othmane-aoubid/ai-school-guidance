@@ -33,7 +33,13 @@
         class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
         @click="handleNavigationClick"
       >
-        <component :is="item.icon" class="w-5 h-5" />
+        <!-- Check if the icon is a Heroicon or FontAwesome icon -->
+        <template v-if="isHeroIcon(item.icon)">
+          <component :is="item.icon" class="w-5 h-5" />
+        </template>
+        <template v-else>
+          <font-awesome-icon :icon="item.icon" class="w-5 h-5 text-white" style="color: #FFFFFF !important" />
+        </template>
         <!-- Show text when sidebar is expanded -->
         <span v-if="!isCollapsed" class="ml-3 transition-all duration-300">
           {{ item.name }}
@@ -47,19 +53,24 @@
 import { ref } from 'vue';
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { HomeIcon, ChartBarIcon, UsersIcon, CogIcon } from '@heroicons/vue/24/outline';
-
+import { faUsers, faTrophy, faCalendar, faRobot,  } from '@fortawesome/free-solid-svg-icons'; // Import Font Awesome icons
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 const isCollapsed = ref(false); // Sidebar state (collapsed or expanded)
 
 const navigation = [
   { name: 'Dashboard', icon: HomeIcon, path: '/dashboard' },
   { name: 'Analytics', icon: ChartBarIcon, path: '/analytics' },
-  { name: 'Career Matching', icon: ChartBarIcon, path: '/CareerMatching' },
-  { name: 'Ai Chat Support', icon: ChartBarIcon, path: '/Aichatsupport' },
-  { name: 'Study Time Table', icon: ChartBarIcon, path: '/timetable' },
-  { name: 'Gamificationt', icon: ChartBarIcon, path: '/gamificationt' },
+  { name: 'Career Matching', icon: faCalendar, path: '/CareerMatching' }, // Career Matching FontAwesome icon
+  { name: 'AI Chat Support', icon: faRobot, path: '/Aichatsupport' }, // AI Chat Support FontAwesome icon
+  { name: 'Study Time Table', icon: faCalendar, path: '/timetable' }, // Study Time Table FontAwesome icon
+  { name: 'Gamification', icon: faTrophy, path: '/gamificationt' }, // Gamification FontAwesome icon
   { name: 'Users', icon: UsersIcon, path: '/users' },
   { name: 'Settings', icon: CogIcon, path: '/settings' },
 ];
+
+const isHeroIcon = (icon) => {
+  return [HomeIcon, ChartBarIcon, UsersIcon, CogIcon].includes(icon);
+};
 
 // Toggle the sidebar state between collapsed and expanded
 const toggleSidebar = () => {
