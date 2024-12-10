@@ -50,7 +50,7 @@
             >
               Sign In
             </button></router-link>
-            <router-link to="/RegisterView">
+            <router-link to="/register">
                 <button
               class="bg-white text-purple-600 hover:bg-purple-50 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
             >

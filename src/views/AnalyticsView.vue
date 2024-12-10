@@ -4,6 +4,9 @@
     <div class="flex-1 flex flex-col overflow-hidden">
       <TopNavigation />
       <div class="space-y-8 p-5" style="overflow-y: scroll">
+
+        <Studentanalytics />
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <LineChart />
           <BarChart />
@@ -34,6 +37,7 @@ import DoughnutChart from "../components/charts/DoughnutChart.vue";
 import RadarChart from "../components/charts/RadarChart.vue";
 import UserFeedback from "../components/UserFeedback.vue";
 import QuestionnaireForm from "../components/QuestionnaireForm.vue";
+import Studentanalytics from '../components/Studentanalytics.vue'
 
 const metrics = ref([
   { name: "Page Views", value: "0", change: "+0%" },

@@ -105,32 +105,24 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { RouterLink } from "vue-router";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faGraduationCap, faLock } from "@fortawesome/free-solid-svg-icons";
+import { useAuthStore } from "../stores/auth";
 
-library.add(faGraduationCap, faLock);
-
+const email = ref("");
+const password = ref("");
+const authStore = useAuthStore();
 const router = useRouter();
-const email = ref("admin@gmail.com");
-const password = ref("guest123456");
 
-const validCredentials = {
-  email: "admin@gmail.com",
-  password: "guest123456",
-};
-
-const login = () => {
-  if (
-    email.value === validCredentials.email &&
-    password.value === validCredentials.password
-  ) {
-    // Set authentication state (this is a simple example, use a more secure method in production)
-    localStorage.setItem("isAuthenticated", "true");
-    router.push("/dashboard");
-  } else {
-    alert("Invalid credentials");
+const login = async () => {
+  try {
+    await authStore.login(email.value, password.value);
+    if (authStore.error) {
+      alert(`Login failed: ${authStore.error}`);
+    } else {
+      router.push("/dashboard"); // Redirect on success
+    }
+  } catch (err) {
+    console.error("Error logging in:", err.message);
+    alert("An error occurred during login.");
   }
 };
 </script>

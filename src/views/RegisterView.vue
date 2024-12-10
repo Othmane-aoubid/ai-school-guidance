@@ -117,6 +117,9 @@ import { RouterLink } from "vue-router";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faGraduationCap, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db } from "../firebase/config"; 
 
 library.add(faGraduationCap, faUserPlus);
 
@@ -125,10 +128,42 @@ const name = ref("");
 const email = ref("");
 const password = ref("");
 
-const register = () => {
-  // Implement your registration logic here
-  console.log("Registering with:", name.value, email.value, password.value);
-  // After successful registration, redirect to dashboard
-  router.push("/dashboard");
+const register = async () => {
+  try {
+    // Ensure all fields are filled
+    if (!name.value || !email.value || !password.value) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    // Create user with Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
+    const user = userCredential.user;
+
+    // Add user to Firestore
+    await setDoc(doc(db, "users", user.uid), {
+      uid: user.uid,
+      name: name.value,
+      email: user.email,
+      createdAt: serverTimestamp(),
+    });
+
+    console.log("User registered and added to Firestore:", user.uid);
+
+    // Redirect to login page
+    router.push("/login");
+  } catch (error) {
+    console.error("Error during registration:", error.message);
+
+    // Display appropriate error messages
+    if (error.code === "auth/email-already-in-use") {
+      alert("The email is already in use.");
+    } else if (error.code === "auth/weak-password") {
+      alert("Password should be at least 6 characters.");
+    } else {
+      alert("Registration failed: " + error.message);
+    }
+  }
 };
 </script>
+
