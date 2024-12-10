@@ -4,8 +4,9 @@
     <div class="flex-1 flex flex-col overflow-hidden">
       <TopNavigation />
       <div class="min-h-screen bg-gray-100 p-5 pb-3" style="overflow-y: scroll">
-        <header class="bg-blue-600 text-white p-4">
-          <h1 class="text-2xl font-bold">StudyMaster - Timetable</h1>
+        <TimeTable />
+        <header class="bg-blue-600 text-white p-4" style="background-color:#1F2937">
+          <h1 class="text-2xl font-bold text-blue-400">StudyMaster - Timetable</h1>
         </header>
 
         <main class="container mx-auto p-4">
@@ -64,11 +65,12 @@ import { ref, onMounted } from "vue";
 import Chart from "chart.js/auto";
 import Sidebar from "../components/Sidebar.vue";
 import TopNavigation from "../components/TopNavigation.vue";
+import TimeTable from "../components/TimeTable.vue"
 
 export default {
   name: "StudyTimetableView",
   components:{
-    Sidebar,TopNavigation
+    Sidebar,TopNavigation, TimeTable
   },
   setup() {
     const timetable = ref([
