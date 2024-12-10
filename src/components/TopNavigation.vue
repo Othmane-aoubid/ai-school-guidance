@@ -156,8 +156,8 @@ export default {
     handleLogout() {
       const authStore = useAuthStore();
       authStore.signOut();
-      const router = useRouter();
-      router.push("/");
+      // Navigate to the login page using route name
+      this.$router.push({ name: 'LandingPage' });
     },
     async fetchProfilePic () {
       const authStore = useAuthStore();
