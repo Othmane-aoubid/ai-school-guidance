@@ -2,7 +2,7 @@
   <div class="flex h-screen bg-gray-100">
     <Sidebar />
     <div class="flex-1 flex flex-col overflow-hidden" style="overflow-y: scroll">
-      <TopNavigation :profilePicture="profilePicture" />
+      <TopNavigation :profilePicture="dataStore.profilePic" />
       <div class="space-y-6 px-3">
         <h1 class="text-2xl font-semibold text-gray-900">Settings</h1>
 
@@ -14,8 +14,8 @@
               <div class="flex items-center gap-4">
                 <div class="w-24 h-24 rounded-full overflow-hidden bg-gray-200">
                   <img
-                    v-if="profilePicture"
-                    :src="profilePicture"
+                    v-if="dataStore.profilePic"
+                    :src="dataStore.profilePic"
                     alt="Profile Picture"
                     class="w-full h-full object-cover"
                   />
@@ -104,24 +104,27 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted } from "vue";
 import { useAuthStore } from "../stores/auth";
+import { useDataStore } from "../stores/data"; // Import the data store
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
 import Sidebar from "../components/Sidebar.vue";
 import TopNavigation from "../components/TopNavigation.vue";
 import { UserCircleIcon } from "@heroicons/vue/24/solid";
 
+// Initialize stores
 const authStore = useAuthStore();
+const dataStore = useDataStore(); // Initialize data store
+
 const currentSettings = ref({
   notifications: true,
   emailUpdates: false,
   language: "en",
 });
 
-const profilePicture = ref<string | null>(null);
-const selectedFile = ref<File | null>(null);
+const selectedFile = ref(null);
 
 const languages = [
   { value: "en", label: "English" },
@@ -129,18 +132,20 @@ const languages = [
   { value: "fr", label: "French" },
 ];
 
-const handleImageUpload = (event: Event) => {
-  const file = (event.target as HTMLInputElement).files?.[0];
+// Handle image upload and preview
+const handleImageUpload = (event) => {
+  const file = event.target.files?.[0];
   if (file) {
     selectedFile.value = file;
     const reader = new FileReader();
     reader.onload = () => {
-      profilePicture.value = reader.result as string;
+      dataStore.setProfilePic(reader.result); // Store the preview image in data store
     };
     reader.readAsDataURL(file);
   }
 };
 
+// Save the profile picture to Firebase and data store
 const saveProfilePicture = async () => {
   if (!selectedFile.value || !authStore.user) {
     alert("Please upload an image and ensure you're logged in.");
@@ -149,7 +154,7 @@ const saveProfilePicture = async () => {
 
   try {
     const userDocRef = doc(db, "users", authStore.user.uid);
-    await setDoc(userDocRef, { profilePicture: profilePicture.value }, { merge: true });
+    await setDoc(userDocRef, { profilePicture: dataStore.profilePic }, { merge: true });
     alert("Profile picture saved successfully!");
     await fetchProfilePicture(); // Refresh the profile picture
   } catch (error) {
@@ -158,13 +163,14 @@ const saveProfilePicture = async () => {
   }
 };
 
+// Fetch the profile picture from Firebase and store it in data store
 const fetchProfilePicture = async () => {
   if (authStore.user) {
     try {
       const userDocRef = doc(db, "users", authStore.user.uid);
       const userSnapshot = await getDoc(userDocRef);
       if (userSnapshot.exists()) {
-        profilePicture.value = userSnapshot.data().profilePicture || null;
+        dataStore.setProfilePic(userSnapshot.data().profilePicture || null);
       }
     } catch (error) {
       console.error("Error fetching profile picture:", error);
@@ -173,11 +179,10 @@ const fetchProfilePicture = async () => {
 };
 
 onMounted(() => {
-  fetchProfilePicture();
+  fetchProfilePicture(); // Fetch the profile picture on component mount
 });
 
 const saveSettings = () => {
   console.log("Settings saved:", currentSettings.value);
 };
 </script>
-

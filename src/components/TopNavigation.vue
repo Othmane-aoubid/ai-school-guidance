@@ -41,8 +41,8 @@
             <!-- Display Profile Picture -->
             <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-200">
               <img
-                v-if="profilePicture"
-                :src="profilePicture"
+                v-if="profilePic"
+                :src="profilePic"
                 alt="Profile Picture"
                 class="w-full h-full object-cover"
               />
@@ -70,84 +70,34 @@
   </div>
 </template>
 
-<script>
-import { ref, onMounted, watch } from 'vue';
-import { useRouter } from 'vue-router';
+<script setup>
+import { ref } from "vue";
+import { useDataStore } from "../stores/data"; // Import data store
+import { useAuthStore } from "../stores/auth";
+import { useRouter } from "vue-router";
 import {
   BellIcon,
   MagnifyingGlassIcon,
   UserCircleIcon
-} from '@heroicons/vue/24/outline';
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
-import { useAuthStore } from '../stores/auth';
-import { useAuthState } from '../composables/useAuthState';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+} from "@heroicons/vue/24/outline";
+import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 
-export default {
-  name: 'TopNavigation',
-  props: {
-    profilePicture: {
-      type: String,
-      default: null,
-    },
-  },
-  components: {
-    Menu,
-    MenuButton,
-    MenuItems,
-    MenuItem,
-    BellIcon,
-    MagnifyingGlassIcon,
-    UserCircleIcon,
-  },
-  data() {
-    return {
-      searchQuery: '',
-      notifications: [
-        { id: 1, text: 'New user registered', time: '5m ago' },
-        { id: 2, text: 'Server update completed', time: '1h ago' },
-      ],
-    };
-  },
-  watch: {
-    // Watching the profilePicture prop to fetch from DB if not passed
-    profilePicture(newValue) {
-      if (!newValue) {
-        this.fetchProfilePicture();
-      }
-    },
-  },
-  methods: {
-    handleLogout() {
-      const router = useRouter();
-      const authStore = useAuthStore();
-      router.push('/');
-      authStore.signOut();
-    },
+// Initialize stores
+const dataStore = useDataStore(); // Data store for profile picture
+const authStore = useAuthStore(); // Auth store for logout functionality
 
-    async fetchProfilePicture() {
-      const { isAuthenticated, user } = useAuthState();
+const searchQuery = ref("");
+const notifications = [
+  { id: 1, text: "New user registered", time: "5m ago" },
+  { id: 2, text: "Server update completed", time: "1h ago" },
+];
 
-      if (!this.profilePicture && isAuthenticated && user?.uid) {
-        const db = getFirestore();
-        try {
-          const userDoc = doc(db, 'users', user.uid);
-          const userSnapshot = await getDoc(userDoc);
-          if (userSnapshot.exists()) {
-            this.profilePicture = userSnapshot.data().profilePicture || null;
-          } else {
-            this.profilePicture = null;
-          }
-        } catch (error) {
-          console.error('Error fetching profile picture:', error);
-          this.profilePicture = null;
-        }
-      }
-    },
-  },
-  mounted() {
-    this.fetchProfilePicture();
-  },
+// Reactive binding for the profile picture from the data store
+const profilePic = dataStore.profilePic;
+
+const handleLogout = () => {
+  const router = useRouter();
+  router.push("/");
+  authStore.signOut();
 };
 </script>
-
