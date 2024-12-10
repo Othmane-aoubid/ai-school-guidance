@@ -6,13 +6,13 @@ import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDtwvxsu5WX9FXhuGoNgVm-X7b3GgWKy6I",
-  authDomain: "ai-school-guidance.firebaseapp.com",
-  projectId: "ai-school-guidance",
-  storageBucket: "ai-school-guidance.firebasestorage.app",
-  messagingSenderId: "714677739951",
-  appId: "1:714677739951:web:22aea3246afcf6e1cc4f5a",
-  measurementId: "G-PG5DG7599S"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
