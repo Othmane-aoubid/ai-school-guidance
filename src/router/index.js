@@ -13,12 +13,14 @@ import SettingsView from '../views/SettingsView.vue';
 import AichatsupportView from '../views/AichatsupportView.vue';
 import StudyTimetableView from '../views/StudyTimetableView.vue';
 import GamificationView from '../views/GamificationView.vue';
+import OnboardingView from '../views/OnboardingView.vue'
 
 const routes = [
   { path: '/', name: 'LandingPage', component: LandingPage, meta: { requiresAuth: false } },
   { path: '/login', name: 'Login', component: LoginView, meta: { requiresAuth: false } },
   { path: '/register', name: 'Register', component: RegisterView, meta: { requiresAuth: false } },
   { path: '/dashboard', name: 'Dashboard', component: DashboardView, meta: { requiresAuth: true } },
+  { path: '/Onboarding', name: 'Onboarding', component: OnboardingView, meta: { requiresAuth: true } },
   { path: '/analytics', name: 'Analytics', component: AnalyticsView, meta: { requiresAuth: true } },
   { path: '/CareerMatching', name: 'Career Matching', component: CareermatchingView, meta: { requiresAuth: true } },
   { path: '/Aichatsupport', name: 'Ai Chat Support', component: AichatsupportView, meta: { requiresAuth: true } },

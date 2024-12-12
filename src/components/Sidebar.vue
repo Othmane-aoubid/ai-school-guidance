@@ -59,6 +59,7 @@ const isCollapsed = ref(false); // Sidebar state (collapsed or expanded)
 
 const navigation = [
   { name: 'Dashboard', icon: HomeIcon, path: '/dashboard' },
+  { name: 'Onboarding', icon: faUsers, path: '/Onboarding' },
   { name: 'Analytics', icon: ChartBarIcon, path: '/analytics' },
   { name: 'Career Matching', icon: faSchool, path: '/CareerMatching' }, // Career Matching FontAwesome icon
   { name: 'AI Chat Support', icon: faRobot, path: '/Aichatsupport' }, // AI Chat Support FontAwesome icon
