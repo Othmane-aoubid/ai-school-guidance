@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow-y:scroll; height:300px">
     <h3 class="text-2xl font-semibold mb-6">Set your goals and preferences</h3>
     <form @submit.prevent="submitGoals" class="space-y-4">
       <div>

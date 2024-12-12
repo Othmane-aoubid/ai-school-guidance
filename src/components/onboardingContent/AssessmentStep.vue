@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow-y:scroll; height:300px">
     <h3 class="text-2xl font-semibold mb-6">
       Take the initial career assessment
     </h3>

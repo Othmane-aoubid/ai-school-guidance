@@ -75,4 +75,8 @@ const prevStep = () => {
     currentStep.value--;
   }
 };
+
+const completeOnboarding = () => {
+  emit('complete-onboarding');
+};
 </script>

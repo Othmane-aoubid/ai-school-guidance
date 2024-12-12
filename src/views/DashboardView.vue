@@ -3,7 +3,7 @@
     <Sidebar />
     <div class="flex-1 flex flex-col overflow-hidden">
       <TopNavigation />
-      <main class="flex-1 p-8"  style="overflow-y:scroll !important; height: 90% ">
+      <main class="flex-1 p-8"  style="overflow-y:hidden !important; height: 90% ">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard 
           title="Total Revenue" 

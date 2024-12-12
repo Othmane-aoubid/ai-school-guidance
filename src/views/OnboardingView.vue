@@ -1,11 +1,13 @@
 <template>
-  <div class="flex h-screen bg-gray-100">
+  <div class="flex bg-gray-100">
     <!-- Sidebar Component -->
     <Sidebar />
-    <div class="flex-1 flex flex-col overflow-hidden">
+    <div class="flex-1 flex flex-col" style="overflow-y:hidden" >
       <!-- Top Navigation Component -->
       <TopNavigation />
-      <Onboarding />
+      <div style="height:510px !important;">
+        <Onboarding />
+      </div>
     </div>
   </div>
 </template>

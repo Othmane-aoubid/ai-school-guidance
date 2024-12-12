@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow-y:scroll; height:300px">
     <h3 class="text-2xl font-semibold mb-6">Complete your profile</h3>
     <form @submit.prevent="submitProfile" class="space-y-4">
       <div>
@@ -38,7 +38,7 @@
           <option value="graduate">Graduate</option>
         </select>
       </div>
-      <div class="flex justify-end">
+      <div class="flex justify-end" >
         <button
           type="submit"
           class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
