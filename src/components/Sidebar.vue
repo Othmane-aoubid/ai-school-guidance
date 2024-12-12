@@ -53,7 +53,7 @@
 import { ref } from 'vue';
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { HomeIcon, ChartBarIcon, UsersIcon, CogIcon } from '@heroicons/vue/24/outline';
-import { faUsers, faTrophy, faCalendar, faRobot, faSchool  } from '@fortawesome/free-solid-svg-icons'; // Import Font Awesome icons
+import { faUsers, faTrophy, faCalendar, faRobot, faSchool, faTools  } from '@fortawesome/free-solid-svg-icons'; // Import Font Awesome icons
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 const isCollapsed = ref(false); // Sidebar state (collapsed or expanded)
 
@@ -61,6 +61,7 @@ const navigation = [
   { name: 'Dashboard', icon: HomeIcon, path: '/dashboard' },
   { name: 'Onboarding', icon: faUsers, path: '/Onboarding' },
   { name: 'Analytics', icon: ChartBarIcon, path: '/analytics' },
+  { name: 'InteractiveTools', icon: faTools, path: '/InteractiveTools' },
   { name: 'Career Matching', icon: faSchool, path: '/CareerMatching' }, // Career Matching FontAwesome icon
   { name: 'AI Chat Support', icon: faRobot, path: '/Aichatsupport' }, // AI Chat Support FontAwesome icon
   { name: 'Study Time Table', icon: faCalendar, path: '/timetable' }, // Study Time Table FontAwesome icon
