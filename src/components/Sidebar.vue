@@ -2,7 +2,7 @@
   <div :class="[
     'transition-all duration-300 ease-in-out bg-gray-800 text-white',
     isCollapsed ? 'w-16' : 'w-64', // Sidebar collapses to 16 width, expands to 64 width
-  ]">
+  ]" style="overflow-y:scroll">
     <div class="flex items-center justify-between p-4">
       <!-- Logo / Title -->
       <h1 :class="[
@@ -53,7 +53,7 @@
 import { ref } from 'vue';
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { HomeIcon, ChartBarIcon, UsersIcon, CogIcon } from '@heroicons/vue/24/outline';
-import { faUsers, faTrophy, faCalendar, faRobot, faSchool, faTools  } from '@fortawesome/free-solid-svg-icons'; // Import Font Awesome icons
+import { faUsers, faTrophy, faCalendar, faRobot, faSchool, faTools, faBook  } from '@fortawesome/free-solid-svg-icons'; // Import Font Awesome icons
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 const isCollapsed = ref(false); // Sidebar state (collapsed or expanded)
 
@@ -62,6 +62,7 @@ const navigation = [
   { name: 'Onboarding', icon: faUsers, path: '/Onboarding' },
   { name: 'Analytics', icon: ChartBarIcon, path: '/analytics' },
   { name: 'InteractiveTools', icon: faTools, path: '/InteractiveTools' },
+  { name: 'ContentLibrary', icon: faBook, path: '/ContentLibrary' },
   { name: 'Career Matching', icon: faSchool, path: '/CareerMatching' }, // Career Matching FontAwesome icon
   { name: 'AI Chat Support', icon: faRobot, path: '/Aichatsupport' }, // AI Chat Support FontAwesome icon
   { name: 'Study Time Table', icon: faCalendar, path: '/timetable' }, // Study Time Table FontAwesome icon
