@@ -46,10 +46,8 @@ export function createAppRouter() {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
     if (requiresAuth && !authStore.user) {
-      console.log('User is not authenticated, redirecting to login');
       next('/login');
     } else {
-      console.log('User is authenticated, proceeding to:', to.path);
       next();
     }
   });

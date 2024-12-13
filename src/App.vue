@@ -6,17 +6,27 @@
 </template>
 
 <script>
-import { provideAuthState } from './composables/useAuthState'
+import { provideAuthState } from "./composables/useAuthState";
 
 export default {
-  name: 'App',
+  name: "App",
   setup() {
-    provideAuthState()
-  }
-}
+    provideAuthState();
+  },
+};
 </script>
 
 <style>
-/* Your global styles here */
+.app {
+  display: flex;
+}
+main {
+  flex: 1 1 0;
+  padding: 2rem;
+}
+@media (max-width: 1024px) {
+  main {
+    padding: 2rem;
+  }
+}
 </style>
-

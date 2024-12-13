@@ -18,7 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
   // Set Firebase authentication persistence to local
   setPersistence(auth, browserLocalPersistence)
     .then(() => {
-      console.log('Persistence set to local');
+      
     })
     .catch((err) => {
       console.error('Error setting persistence:', err);
@@ -29,10 +29,8 @@ export const useAuthStore = defineStore('auth', () => {
     onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
         user.value = firebaseUser;
-        console.log('User is authenticated:', firebaseUser);
       } else {
         user.value = null;
-        console.log('User is not authenticated');
       }
     });
   };
@@ -45,10 +43,8 @@ export const useAuthStore = defineStore('auth', () => {
       const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
         if (firebaseUser) {
           user.value = firebaseUser;
-          console.log('User is authenticated:', firebaseUser);
         } else {
           user.value = null;
-          console.log('User is not authenticated');
         }
         unsubscribe();
         resolve();

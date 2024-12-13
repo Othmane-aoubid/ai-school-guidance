@@ -166,9 +166,7 @@ export default {
           const userDocRef = doc(db, "users", authStore.user.uid);
           const userSnapshot = await getDoc(userDocRef);
           if (userSnapshot.exists()) {
-            console.log("userSnapshot.data().profilePicture ", userSnapshot.data().profilePicture)
             this.profilePic = userSnapshot.data().profilePicture;
-            console.log("this.profilePic ", this.profilePic)
           }
         } catch (error) {
           console.error("Error fetching profile picture:", error);
