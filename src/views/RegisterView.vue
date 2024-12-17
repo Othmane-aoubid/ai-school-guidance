@@ -110,60 +110,77 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script>
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db } from "../firebase/config";
 import { useRouter } from "vue-router";
 import { RouterLink } from "vue-router";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faGraduationCap, faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { auth, db } from "../firebase/config"; 
 
+// Add icons to library
 library.add(faGraduationCap, faUserPlus);
 
-const router = useRouter();
-const name = ref("");
-const email = ref("");
-const password = ref("");
+export default {
+  name: "RegisterPage",
+  components: {
+    RouterLink,
+    FontAwesomeIcon,
+  },
+  data() {
+    return {
+      name: "",
+      email: "",
+      password: "",
+    };
+  },
+  computed: {
+    router() {
+      return useRouter();
+    },
+  },
+  methods: {
+    async register() {
+      try {
+        // Ensure all fields are filled
+        if (!this.name || !this.email || !this.password) {
+          alert("Please fill in all fields.");
+          return;
+        }
 
-const register = async () => {
-  try {
-    // Ensure all fields are filled
-    if (!name.value || !email.value || !password.value) {
-      alert("Please fill in all fields.");
-      return;
-    }
+        // Create user with Firebase Auth
+        const userCredential = await createUserWithEmailAndPassword(auth, this.email, this.password);
+        const user = userCredential.user;
 
-    // Create user with Firebase Auth
-    const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
-    const user = userCredential.user;
+        // Add user to Firestore
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          name: this.name,
+          email: user.email,
+          createdAt: serverTimestamp(),
+        });
 
-    // Add user to Firestore
-    await setDoc(doc(db, "users", user.uid), {
-      uid: user.uid,
-      name: name.value,
-      email: user.email,
-      createdAt: serverTimestamp(),
-    });
+        console.log("User registered and added to Firestore:", user.uid);
 
-    console.log("User registered and added to Firestore:", user.uid);
+        // Redirect to login page
+        this.router.push("/login");
+      } catch (error) {
+        console.error("Error during registration:", error.message);
 
-    // Redirect to login page
-    router.push("/login");
-  } catch (error) {
-    console.error("Error during registration:", error.message);
-
-    // Display appropriate error messages
-    if (error.code === "auth/email-already-in-use") {
-      alert("The email is already in use.");
-    } else if (error.code === "auth/weak-password") {
-      alert("Password should be at least 6 characters.");
-    } else {
-      alert("Registration failed: " + error.message);
-    }
-  }
+        // Display appropriate error messages
+        if (error.code === "auth/email-already-in-use") {
+          alert("The email is already in use.");
+        } else if (error.code === "auth/weak-password") {
+          alert("Password should be at least 6 characters.");
+        } else {
+          alert("Registration failed: " + error.message);
+        }
+      }
+    },
+  },
 };
 </script>
+
 

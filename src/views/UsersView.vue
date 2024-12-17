@@ -61,34 +61,48 @@
 </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue';
+<script>
 import Sidebar from '../components/Sidebar.vue';
 import TopNavigation from '../components/TopNavigation.vue';
 
-const users = ref([]);
-const loading = ref(true);
-
-onMounted(async () => {
-  // Simulated user data - replace with actual Firebase query
-  users.value = [
-    {
-      id: '1',
-      name: 'John Doe',
-      email: 'john@example.com',
-      role: 'Admin',
-      status: 'Active',
-      lastActive: '2024-02-20'
-    },
-    {
-      id: '2',
-      name: 'Jane Smith',
-      email: 'jane@example.com',
-      role: 'User',
-      status: 'Active',
-      lastActive: '2024-02-19'
+export default {
+  name: 'UserListView',
+  components: {
+    Sidebar,
+    TopNavigation
+  },
+  data() {
+    return {
+      users: [],
+      loading: true
+    };
+  },
+  methods: {
+    async fetchUsers() {
+      // Simulated user data - replace with actual Firebase query
+      this.users = [
+        {
+          id: '1',
+          name: 'John Doe',
+          email: 'john@example.com',
+          role: 'Admin',
+          status: 'Active',
+          lastActive: '2024-02-20'
+        },
+        {
+          id: '2',
+          name: 'Jane Smith',
+          email: 'jane@example.com',
+          role: 'User',
+          status: 'Active',
+          lastActive: '2024-02-19'
+        }
+      ];
+      this.loading = false;
     }
-  ];
-  loading.value = false;
-});
+  },
+  mounted() {
+    this.fetchUsers(); // Fetch users on component mount
+  }
+};
 </script>

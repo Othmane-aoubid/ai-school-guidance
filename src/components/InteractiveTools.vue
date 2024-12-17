@@ -39,6 +39,19 @@
           Start Shadowing
         </button>
       </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold mb-4">Resume Builder</h3>
+        <p class="mb-4">
+          Build youre own custome resume
+        </p>
+        <router-link to="/resume-builder">
+        <button
+          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300"
+        >
+          Build Resume
+        </button>
+        </router-link> 
+      </div>
     </div>
   </div>
 </template>

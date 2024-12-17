@@ -37,28 +37,36 @@
   </div>
 </template>
 
-<script setup>
-const feedbacks = [
-  {
-    id: 1,
-    user: "John Doe",
-    rating: 5,
-    comment: "Excellent service! Very satisfied with the platform.",
-    time: "2 hours ago",
+<script>
+export default {
+  name: 'FeedbackList',
+  data() {
+    return {
+      feedbacks: [
+        {
+          id: 1,
+          user: "John Doe",
+          rating: 5,
+          comment: "Excellent service! Very satisfied with the platform.",
+          time: "2 hours ago",
+        },
+        {
+          id: 2,
+          user: "Jane Smith",
+          rating: 4,
+          comment: "Good experience overall, but could use some improvements.",
+          time: "5 hours ago",
+        },
+        {
+          id: 3,
+          user: "Mike Johnson",
+          rating: 5,
+          comment: "The new features are amazing! Keep up the good work.",
+          time: "1 day ago",
+        },
+      ],
+    };
   },
-  {
-    id: 2,
-    user: "Jane Smith",
-    rating: 4,
-    comment: "Good experience overall, but could use some improvements.",
-    time: "5 hours ago",
-  },
-  {
-    id: 3,
-    user: "Mike Johnson",
-    rating: 5,
-    comment: "The new features are amazing! Keep up the good work.",
-    time: "1 day ago",
-  },
-];
+};
 </script>
+

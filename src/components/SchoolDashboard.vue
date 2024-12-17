@@ -73,95 +73,103 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import { ref, onMounted } from "vue";
 import Chart from "chart.js/auto";
 
-const schoolName = ref("Evergreen High School");
-const studentEngagement = ref(78);
-
-const popularCareers = ref([
-  { title: "Computer Science", percentage: 25 },
-  { title: "Engineering", percentage: 20 },
-  { title: "Healthcare", percentage: 18 },
-  { title: "Business", percentage: 15 },
-  { title: "Arts and Design", percentage: 12 },
-]);
-
-const quickActions = ref([
-  { title: "Schedule Career Fair" },
-  { title: "Generate Performance Reports" },
-  { title: "Update Curriculum Integration" },
-  { title: "Manage Student Accounts" },
-]);
-
-const recentUpdates = ref([
-  {
-    title: "New Career Exploration Module",
-    description:
-      "A new interactive module on emerging tech careers has been added to the platform.",
-    date: "2 days ago",
-    icon: "fas fa-plus-circle text-green-500",
-  },
-  {
-    title: "Student Achievement Milestone",
-    description:
-      "500 students have completed their career assessment this month.",
-    date: "1 week ago",
-    icon: "fas fa-award text-yellow-500",
-  },
-  {
-    title: "Upcoming Webinar",
-    description:
-      'Join us for a webinar on "Preparing Students for the Future of Work" next week.',
-    date: "3 days ago",
-    icon: "fas fa-video text-blue-500",
-  },
-]);
-
-const performanceChart = ref(null);
-
-onMounted(() => {
-  const ctx = performanceChart.value.getContext("2d");
-  new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: ["Grade 9", "Grade 10", "Grade 11", "Grade 12"],
-      datasets: [
+export default {
+  name: "SchoolDashboard",
+  data() {
+    return {
+      schoolName: "Evergreen High School",
+      studentEngagement: 78,
+      popularCareers: [
+        { title: "Computer Science", percentage: 25 },
+        { title: "Engineering", percentage: 20 },
+        { title: "Healthcare", percentage: 18 },
+        { title: "Business", percentage: 15 },
+        { title: "Arts and Design", percentage: 12 },
+      ],
+      quickActions: [
+        { title: "Schedule Career Fair" },
+        { title: "Generate Performance Reports" },
+        { title: "Update Curriculum Integration" },
+        { title: "Manage Student Accounts" },
+      ],
+      recentUpdates: [
         {
-          label: "Career Readiness Score",
-          data: [65, 70, 80, 85],
-          backgroundColor: "rgba(59, 130, 246, 0.8)",
+          title: "New Career Exploration Module",
+          description:
+            "A new interactive module on emerging tech careers has been added to the platform.",
+          date: "2 days ago",
+          icon: "fas fa-plus-circle text-green-500",
         },
         {
-          label: "Platform Engagement",
-          data: [70, 75, 85, 90],
-          backgroundColor: "rgba(16, 185, 129, 0.8)",
+          title: "Student Achievement Milestone",
+          description:
+            "500 students have completed their career assessment this month.",
+          date: "1 week ago",
+          icon: "fas fa-award text-yellow-500",
+        },
+        {
+          title: "Upcoming Webinar",
+          description:
+            'Join us for a webinar on "Preparing Students for the Future of Work" next week.',
+          date: "3 days ago",
+          icon: "fas fa-video text-blue-500",
         },
       ],
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true,
-          max: 100,
-          title: {
-            display: true,
-            text: "Score / Engagement %",
+      performanceChart: null,
+    };
+  },
+  methods: {
+    initializeChart() {
+      const ctx = this.performanceChart.getContext("2d");
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: ["Grade 9", "Grade 10", "Grade 11", "Grade 12"],
+          datasets: [
+            {
+              label: "Career Readiness Score",
+              data: [65, 70, 80, 85],
+              backgroundColor: "rgba(59, 130, 246, 0.8)",
+            },
+            {
+              label: "Platform Engagement",
+              data: [70, 75, 85, 90],
+              backgroundColor: "rgba(16, 185, 129, 0.8)",
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              title: {
+                display: true,
+                text: "Score / Engagement %",
+              },
+            },
+          },
+          plugins: {
+            legend: {
+              position: "top",
+            },
+            title: {
+              display: true,
+              text: "Student Performance by Grade",
+            },
           },
         },
-      },
-      plugins: {
-        legend: {
-          position: "top",
-        },
-        title: {
-          display: true,
-          text: "Student Performance by Grade",
-        },
-      },
+      });
     },
-  });
-});
+  },
+  mounted() {
+    this.initializeChart();
+  },
+};
 </script>
+

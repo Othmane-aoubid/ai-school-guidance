@@ -16,6 +16,7 @@ import GamificationView from '../views/GamificationView.vue';
 import OnboardingView from '../views/OnboardingView.vue';
 import InteractiveToolsView from '../views/InteractiveToolsView.vue';
 import ContentLibraryView from '../views/ContentLibraryView.vue'
+import ResumeBuilderView from '../views/ResumeBuilderView.vue'
 
 const routes = [
   { path: '/', name: 'LandingPage', component: LandingPage, meta: { requiresAuth: false } },
@@ -24,14 +25,15 @@ const routes = [
   { path: '/dashboard', name: 'Dashboard', component: DashboardView, meta: { requiresAuth: true } },
   { path: '/Onboarding', name: 'Onboarding', component: OnboardingView, meta: { requiresAuth: true } },
   { path: '/analytics', name: 'Analytics', component: AnalyticsView, meta: { requiresAuth: true } },
-  { path: '/InteractiveTools', name: 'InteractiveTools', component: InteractiveToolsView, meta: { requiresAuth: true } },
-  { path: '/ContentLibrary', name: 'ContentLibrary', component: ContentLibraryView, meta: { requiresAuth: true } },
-  { path: '/CareerMatching', name: 'Career Matching', component: CareermatchingView, meta: { requiresAuth: true } },
-  { path: '/Aichatsupport', name: 'Ai Chat Support', component: AichatsupportView, meta: { requiresAuth: true } },
+  { path: '/interactive-tools', name: 'InteractiveTools', component: InteractiveToolsView, meta: { requiresAuth: true } },
+  { path: '/content-library', name: 'ContentLibrary', component: ContentLibraryView, meta: { requiresAuth: true } },
+  { path: '/career-matching', name: 'Career Matching', component: CareermatchingView, meta: { requiresAuth: true } },
+  { path: '/ai-chat-support', name: 'Ai Chat Support', component: AichatsupportView, meta: { requiresAuth: true } },
   { path: '/timetable', name: 'Study Time Table', component: StudyTimetableView, meta: { requiresAuth: true } },
-  { path: '/gamificationt', name: 'Gamification', component: GamificationView, meta: { requiresAuth: true } },
+  { path: '/gamification', name: 'Gamification', component: GamificationView, meta: { requiresAuth: true } },
   { path: '/users', name: 'Users', component: UsersView, meta: { requiresAuth: true } },
   { path: '/settings', name: 'Settings', component: SettingsView, meta: { requiresAuth: true } },
+  { path: '/resume-builder', name: 'ResumeBuilder', component: ResumeBuilderView, meta: { requiresAuth: true } },
 ];
 
 export function createAppRouter() {

@@ -102,27 +102,40 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script>
 import { useRouter } from "vue-router";
 import { useAuthStore } from "../stores/auth";
 
-const email = ref("");
-const password = ref("");
-const authStore = useAuthStore();
-const router = useRouter();
-
-const login = async () => {
-  try {
-    await authStore.login(email.value, password.value);
-    if (authStore.error) {
-      alert(`Login failed: ${authStore.error}`);
-    } else {
-      router.push("/dashboard"); // Redirect on success
-    }
-  } catch (err) {
-    console.error("Error logging in:", err.message);
-    alert("An error occurred during login.");
-  }
+export default {
+  name: "LoginPage",
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  computed: {
+    authStore() {
+      return useAuthStore();
+    },
+    router() {
+      return useRouter();
+    },
+  },
+  methods: {
+    async login() {
+      try {
+        await this.authStore.login(this.email, this.password);
+        if (this.authStore.error) {
+          alert(`Login failed: ${this.authStore.error}`);
+        } else {
+          this.router.push("/dashboard"); // Redirect on success
+        }
+      } catch (err) {
+        console.error("Error logging in:", err.message);
+        alert("An error occurred during login.");
+      }
+    },
+  },
 };
 </script>

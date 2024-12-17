@@ -54,18 +54,34 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from "vue";
+<script>
 import QuestionItem from "../components/QuestionItem.vue";
 import { useQuestionnaire } from "../useQuestionnaire";
 import Sidebar from "../components/Sidebar.vue";
 import TopNavigation from "../components/TopNavigation.vue";
 import CreerMatching from "../components/CreerMatching.vue";
 
-const { sections, answers } = useQuestionnaire();
-
-const handleSubmit = () => {
-  console.log("Form submitted:", answers);
-  // Handle form submission logic here
+export default {
+  name: "QuestionnaireForm",
+  components: {
+    QuestionItem,
+    Sidebar,
+    TopNavigation,
+    CreerMatching,
+  },
+  data() {
+    const { sections, answers } = useQuestionnaire();
+    return {
+      sections,
+      answers,
+    };
+  },
+  methods: {
+    handleSubmit() {
+      console.log("Form submitted:", this.answers);
+      // Handle form submission logic here
+    },
+  },
 };
 </script>
+

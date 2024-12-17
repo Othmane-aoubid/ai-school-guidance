@@ -26,8 +26,7 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from "vue";
+<script>
 import Sidebar from "../components/Sidebar.vue";
 import TopNavigation from "../components/TopNavigation.vue";
 import StatCard from "../components/StatCard.vue";
@@ -37,22 +36,41 @@ import DoughnutChart from "../components/charts/DoughnutChart.vue";
 import RadarChart from "../components/charts/RadarChart.vue";
 import UserFeedback from "../components/UserFeedback.vue";
 import QuestionnaireForm from "../components/QuestionnaireForm.vue";
-import Studentanalytics from '../components/Studentanalytics.vue'
+import Studentanalytics from '../components/Studentanalytics.vue';
 
-const metrics = ref([
-  { name: "Page Views", value: "0", change: "+0%" },
-  { name: "Bounce Rate", value: "0%", change: "0%" },
-  { name: "Average Session", value: "0m", change: "0%" },
-  { name: "Conversion Rate", value: "0%", change: "0%" },
-]);
-
-onMounted(() => {
-  // Simulated analytics data
-  metrics.value = [
-    { name: "Page Views", value: "45,232", change: "+23%" },
-    { name: "Bounce Rate", value: "32%", change: "-12%" },
-    { name: "Average Session", value: "4m 23s", change: "+8%" },
-    { name: "Conversion Rate", value: "3.2%", change: "+14%" },
-  ];
-});
+export default {
+  name: "AnalyticsDashboard",
+  components: {
+    Sidebar,
+    TopNavigation,
+    StatCard,
+    LineChart,
+    BarChart,
+    DoughnutChart,
+    RadarChart,
+    UserFeedback,
+    QuestionnaireForm,
+    Studentanalytics,
+  },
+  data() {
+    return {
+      metrics: [
+        { name: "Page Views", value: "0", change: "+0%" },
+        { name: "Bounce Rate", value: "0%", change: "0%" },
+        { name: "Average Session", value: "0m", change: "0%" },
+        { name: "Conversion Rate", value: "0%", change: "0%" },
+      ],
+    };
+  },
+  mounted() {
+    // Simulated analytics data
+    this.metrics = [
+      { name: "Page Views", value: "45,232", change: "+23%" },
+      { name: "Bounce Rate", value: "32%", change: "-12%" },
+      { name: "Average Session", value: "4m 23s", change: "+8%" },
+      { name: "Conversion Rate", value: "3.2%", change: "+14%" },
+    ];
+  },
+};
 </script>
+

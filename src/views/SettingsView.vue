@@ -104,85 +104,92 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from "vue";
-import { useAuthStore } from "../stores/auth";
-import { useDataStore } from "../stores/data"; // Import the data store
+<script>
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
+import { useAuthStore } from "../stores/auth";
+import { useDataStore } from "../stores/data"; // Import the data store
 import Sidebar from "../components/Sidebar.vue";
 import TopNavigation from "../components/TopNavigation.vue";
 import { UserCircleIcon } from "@heroicons/vue/24/solid";
 
-// Initialize stores
-const authStore = useAuthStore();
-const dataStore = useDataStore(); // Initialize data store
-
-const currentSettings = ref({
-  notifications: true,
-  emailUpdates: false,
-  language: "en",
-});
-
-const selectedFile = ref(null);
-
-const languages = [
-  { value: "en", label: "English" },
-  { value: "es", label: "Spanish" },
-  { value: "fr", label: "French" },
-];
-
-// Handle image upload and preview
-const handleImageUpload = (event) => {
-  const file = event.target.files?.[0];
-  if (file) {
-    selectedFile.value = file;
-    const reader = new FileReader();
-    reader.onload = () => {
-      dataStore.setProfilePic(reader.result); // Store the preview image in data store
+export default {
+  name: "ProfileSettings",
+  components: {
+    Sidebar,
+    TopNavigation,
+    UserCircleIcon,
+  },
+  data() {
+    return {
+      currentSettings: {
+        notifications: true,
+        emailUpdates: false,
+        language: "en",
+      },
+      selectedFile: null,
+      languages: [
+        { value: "en", label: "English" },
+        { value: "es", label: "Spanish" },
+        { value: "fr", label: "French" },
+      ],
     };
-    reader.readAsDataURL(file);
-  }
-};
-
-// Save the profile picture to Firebase and data store
-const saveProfilePicture = async () => {
-  if (!selectedFile.value || !authStore.user) {
-    alert("Please upload an image and ensure you're logged in.");
-    return;
-  }
-
-  try {
-    const userDocRef = doc(db, "users", authStore.user.uid);
-    await setDoc(userDocRef, { profilePicture: dataStore.profilePic }, { merge: true });
-    alert("Profile picture saved successfully!");
-    await fetchProfilePicture(); // Refresh the profile picture
-  } catch (error) {
-    console.error("Error saving profile picture:", error);
-    alert("Failed to save profile picture.");
-  }
-};
-
-// Fetch the profile picture from Firebase and store it in data store
-const fetchProfilePicture = async () => {
-  if (authStore.user) {
-    try {
-      const userDocRef = doc(db, "users", authStore.user.uid);
-      const userSnapshot = await getDoc(userDocRef);
-      if (userSnapshot.exists()) {
-        dataStore.setProfilePic(userSnapshot.data().profilePicture || null);
+  },
+  computed: {
+    authStore() {
+      return useAuthStore();
+    },
+    dataStore() {
+      return useDataStore();
+    },
+  },
+  methods: {
+    async handleImageUpload(event) {
+      const file = event.target.files?.[0];
+      if (file) {
+        this.selectedFile = file;
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.dataStore.setProfilePic(reader.result); // Store the preview image in data store
+        };
+        reader.readAsDataURL(file);
       }
-    } catch (error) {
-      console.error("Error fetching profile picture:", error);
-    }
-  }
-};
+    },
+    async saveProfilePicture() {
+      if (!this.selectedFile || !this.authStore.user) {
+        alert("Please upload an image and ensure you're logged in.");
+        return;
+      }
 
-onMounted(() => {
-  fetchProfilePicture(); // Fetch the profile picture on component mount
-});
-
-const saveSettings = () => {
-  console.log("Settings saved:", currentSettings.value);
+      try {
+        const userDocRef = doc(db, "users", this.authStore.user.uid);
+        await setDoc(userDocRef, { profilePicture: this.dataStore.profilePic }, { merge: true });
+        alert("Profile picture saved successfully!");
+        await this.fetchProfilePicture(); // Refresh the profile picture
+      } catch (error) {
+        console.error("Error saving profile picture:", error);
+        alert("Failed to save profile picture.");
+      }
+    },
+    async fetchProfilePicture() {
+      if (this.authStore.user) {
+        try {
+          const userDocRef = doc(db, "users", this.authStore.user.uid);
+          const userSnapshot = await getDoc(userDocRef);
+          if (userSnapshot.exists()) {
+            this.dataStore.setProfilePic(userSnapshot.data().profilePicture || null);
+          }
+        } catch (error) {
+          console.error("Error fetching profile picture:", error);
+        }
+      }
+    },
+    saveSettings() {
+      console.log("Settings saved:", this.currentSettings);
+    },
+  },
+  mounted() {
+    this.fetchProfilePicture(); // Fetch the profile picture on component mount
+  },
 };
 </script>

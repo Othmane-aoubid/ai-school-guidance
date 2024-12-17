@@ -97,81 +97,88 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from "vue";
+<script>
 import Chart from "chart.js/auto";
 
-const studentName = ref("Sarah");
-const progressPercentage = ref(75);
-
-const recommendedCareers = ref([
-  { title: "Software Developer", icon: "fas fa-laptop-code" },
-  { title: "Data Analyst", icon: "fas fa-chart-line" },
-  { title: "UX Designer", icon: "fas fa-paint-brush" },
-]);
-
-const upcomingTasks = ref([
-  { title: "Complete Career Quiz", dueDate: "Due in 2 days" },
-  { title: "Update Resume", dueDate: "Due in 5 days" },
-  { title: "Research Internships", dueDate: "Due in 1 week" },
-]);
-
-const recentActivities = ref([
-  {
-    title: "Completed Python Basics Course",
-    date: "2 days ago",
-    icon: "fas fa-check-circle text-green-500",
-  },
-  {
-    title: "Started Web Development Tutorial",
-    date: "5 days ago",
-    icon: "fas fa-book text-blue-500",
-  },
-  {
-    title: "Joined Computer Science Study Group",
-    date: "1 week ago",
-    icon: "fas fa-users text-purple-500",
-  },
-]);
-
-const skillsChart = ref(null);
-
-onMounted(() => {
-  const ctx = skillsChart.value.getContext("2d");
-  new Chart(ctx, {
-    type: "radar",
-    data: {
-      labels: [
-        "Problem Solving",
-        "Creativity",
-        "Communication",
-        "Technical Skills",
-        "Teamwork",
+export default {
+  name: "StudentDashboard",
+  data() {
+    return {
+      studentName: "Sarah",
+      progressPercentage: 75,
+      recommendedCareers: [
+        { title: "Software Developer", icon: "fas fa-laptop-code" },
+        { title: "Data Analyst", icon: "fas fa-chart-line" },
+        { title: "UX Designer", icon: "fas fa-paint-brush" },
       ],
-      datasets: [
+      upcomingTasks: [
+        { title: "Complete Career Quiz", dueDate: "Due in 2 days" },
+        { title: "Update Resume", dueDate: "Due in 5 days" },
+        { title: "Research Internships", dueDate: "Due in 1 week" },
+      ],
+      recentActivities: [
         {
-          label: "Your Skills",
-          data: [80, 70, 65, 85, 75],
-          backgroundColor: "rgba(59, 130, 246, 0.2)",
-          borderColor: "rgba(59, 130, 246, 1)",
-          pointBackgroundColor: "rgba(59, 130, 246, 1)",
-          pointBorderColor: "#fff",
-          pointHoverBackgroundColor: "#fff",
-          pointHoverBorderColor: "rgba(59, 130, 246, 1)",
+          title: "Completed Python Basics Course",
+          date: "2 days ago",
+          icon: "fas fa-check-circle text-green-500",
+        },
+        {
+          title: "Started Web Development Tutorial",
+          date: "5 days ago",
+          icon: "fas fa-book text-blue-500",
+        },
+        {
+          title: "Joined Computer Science Study Group",
+          date: "1 week ago",
+          icon: "fas fa-users text-purple-500",
         },
       ],
-    },
-    options: {
-      scales: {
-        r: {
-          angleLines: {
-            display: false,
-          },
-          suggestedMin: 0,
-          suggestedMax: 100,
+      skillsChart: null,
+    };
+  },
+  methods: {
+    initializeChart() {
+      const ctx = this.skillsChart.getContext("2d");
+      new Chart(ctx, {
+        type: "radar",
+        data: {
+          labels: [
+            "Problem Solving",
+            "Creativity",
+            "Communication",
+            "Technical Skills",
+            "Teamwork",
+          ],
+          datasets: [
+            {
+              label: "Your Skills",
+              data: [80, 70, 65, 85, 75],
+              backgroundColor: "rgba(59, 130, 246, 0.2)",
+              borderColor: "rgba(59, 130, 246, 1)",
+              pointBackgroundColor: "rgba(59, 130, 246, 1)",
+              pointBorderColor: "#fff",
+              pointHoverBackgroundColor: "#fff",
+              pointHoverBorderColor: "rgba(59, 130, 246, 1)",
+            },
+          ],
         },
-      },
+        options: {
+          scales: {
+            r: {
+              angleLines: {
+                display: false,
+              },
+              suggestedMin: 0,
+              suggestedMax: 100,
+            },
+          },
+        },
+      });
     },
-  });
-});
+  },
+  mounted() {
+    this.initializeChart(); // Initialize chart when component is mounted
+  },
+};
 </script>
+

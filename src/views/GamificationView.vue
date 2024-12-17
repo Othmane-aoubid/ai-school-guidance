@@ -1,7 +1,14 @@
 <template>
     <div class="flex h-screen bg-gray-100">
     <Sidebar />
-    <div class="flex-1 flex flex-col overflow-hidden">
+    <div
+      :class="[
+        'flex-1 flex flex-col overflow-hidden',
+        { 'ml-16': !isSidebarCollapsed }, // Apply margin on smaller screens if the sidebar is expanded
+        'sm:ml-16', // This applies margin-left on small screens only (from 'sm' breakpoint and down)
+        'md:ml-0'
+      ]"
+    >
       <TopNavigation />
   <div class="min-h-screen bg-gray-100 p-5 mb-3" style="overflow-y: scroll">
     <header class="bg-blue-600 text-white p-4">
@@ -91,69 +98,65 @@ import TopNavigation from "../components/TopNavigation.vue";
 
 export default {
   name: "GamificationView",
-  components:{
-    Sidebar,TopNavigation
+  components: {
+    Sidebar,
+    TopNavigation,
   },
-  setup() {
-    const totalXP = ref(1250);
-    const currentLevel = ref(5);
-    const progressPercentage = ref(75);
-    const remainingXP = ref(250);
-    const streak = ref([true, true, true, true, false, false, true]);
-    const currentStreak = ref(4);
-
-    const achievements = ref([
-      {
-        id: 1,
-        name: "Early Bird",
-        description: "Complete 5 morning sessions",
-        icon: "🌅",
-        progress: 80,
-        showDetails: false,
-      },
-      {
-        id: 2,
-        name: "Bookworm",
-        description: "Study for 50 hours total",
-        icon: "📚",
-        progress: 65,
-        showDetails: false,
-      },
-      {
-        id: 3,
-        name: "Consistent Learner",
-        description: "Study for 7 days in a row",
-        icon: "🔥",
-        progress: 100,
-        showDetails: false,
-      },
-      {
-        id: 4,
-        name: "Subject Master",
-        description: "Achieve 100% in a subject",
-        icon: "🏆",
-        progress: 40,
-        showDetails: false,
-      },
-    ]);
-
-    const toggleAchievementDetails = (id) => {
-      const achievement = achievements.value.find((a) => a.id === id);
+  data() {
+    return {
+      totalXP: 1250,
+      currentLevel: 5,
+      progressPercentage: 75,
+      remainingXP: 250,
+      streak: [true, true, true, true, false, false, true],
+      currentStreak: 4,
+      isSidebarCollapsed: false,
+      achievements: [
+        {
+          id: 1,
+          name: "Early Bird",
+          description: "Complete 5 morning sessions",
+          icon: "🌅",
+          progress: 80,
+          showDetails: false,
+        },
+        {
+          id: 2,
+          name: "Bookworm",
+          description: "Study for 50 hours total",
+          icon: "📚",
+          progress: 65,
+          showDetails: false,
+        },
+        {
+          id: 3,
+          name: "Consistent Learner",
+          description: "Study for 7 days in a row",
+          icon: "🔥",
+          progress: 100,
+          showDetails: false,
+        },
+        {
+          id: 4,
+          name: "Subject Master",
+          description: "Achieve 100% in a subject",
+          icon: "🏆",
+          progress: 40,
+          showDetails: false,
+        },
+      ],
+    };
+  },
+  methods: {
+    toggleAchievementDetails(id) {
+      const achievement = this.achievements.find((a) => a.id === id);
       if (achievement) {
         achievement.showDetails = !achievement.showDetails;
       }
-    };
-
-    return {
-      totalXP,
-      currentLevel,
-      progressPercentage,
-      remainingXP,
-      streak,
-      currentStreak,
-      achievements,
-      toggleAchievementDetails,
-    };
+    },
+    toggleSidebar() {
+      this.isSidebarCollapsed = !this.isSidebarCollapsed;
+    },
   },
 };
 </script>

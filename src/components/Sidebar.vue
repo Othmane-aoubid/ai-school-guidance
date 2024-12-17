@@ -1,47 +1,50 @@
 <template>
-  <div :class="[
-    'transition-all duration-300 ease-in-out bg-gray-800 text-white',
-    isCollapsed ? 'w-16' : 'w-64', // Sidebar collapses to 16 width, expands to 64 width
-  ]" style="overflow-y:scroll">
+  <div
+    :class="[
+      'bg-gray-800 text-white h-screen fixed lg:relative top-0 bottom-0 z-50',
+      isCollapsed ? 'w-16' : 'w-64',
+      'transition-all duration-500 ease-in-out',
+    ]"
+    @mouseleave="closeSidebarOnMouseLeave"
+  >
     <div class="flex items-center justify-between p-4">
-      <!-- Logo / Title -->
-      <h1 :class="[
-        'font-bold transition-all duration-300',
-        isCollapsed ? 'text-lg' : 'text-2xl'
-      ]">
-        {{ isCollapsed ? '' : 'My App' }}
+      <h1
+        :class="[
+          'font-bold overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out',
+          isCollapsed ? 'text-lg opacity-0' : 'text-2xl opacity-100',
+        ]"
+      >
+        My App
       </h1>
 
-      <!-- Hamburger Button (Always visible) -->
+      <!-- Hamburger Button -->
       <button
         @click="toggleSidebar"
         class="p-1 rounded-lg hover:bg-gray-700 transition-colors"
       >
-        <component
-          :is="isCollapsed ? Bars3Icon : XMarkIcon"
-          class="w-6 h-6"
-        />
+        <component :is="isCollapsed ? Bars3Icon : XMarkIcon" class="w-6 h-6" />
       </button>
     </div>
 
-    <!-- Navigation Links -->
-    <nav class="px-2 py-4 space-y-2">
+    <nav class="px-2 py-4 space-y-2 navigation">
       <router-link
         v-for="item in navigation"
         :key="item.name"
         :to="item.path"
         class="flex items-center px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
-        @click="handleNavigationClick"
+        @mouseenter="openSidebarOnHover"
+        @click="closeSidebarOnClick"
       >
-        <!-- Check if the icon is a Heroicon or FontAwesome icon -->
         <template v-if="isHeroIcon(item.icon)">
-          <component :is="item.icon" class="w-5 h-5" />
+          <component :is="item.icon" class="w-5 h-5 transition-all duration-300 ease-in-out" />
         </template>
         <template v-else>
-          <font-awesome-icon :icon="item.icon" class="w-5 h-5 text-white" style="color: #FFFFFF !important" />
+          <font-awesome-icon :icon="item.icon" class="w-5 h-5 text-white transition-all duration-300 ease-in-out" />
         </template>
-        <!-- Show text when sidebar is expanded -->
-        <span v-if="!isCollapsed" class="ml-3 transition-all duration-300">
+        <span
+          class="ml-3 transition-opacity duration-500 ease-in-out"
+          :class="{ 'opacity-0': isCollapsed, 'opacity-100': !isCollapsed }"
+        >
           {{ item.name }}
         </span>
       </router-link>
@@ -53,55 +56,52 @@
 import { ref } from 'vue';
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline';
 import { HomeIcon, ChartBarIcon, UsersIcon, CogIcon } from '@heroicons/vue/24/outline';
-import { faUsers, faTrophy, faCalendar, faRobot, faSchool, faTools, faBook  } from '@fortawesome/free-solid-svg-icons'; // Import Font Awesome icons
+import { faUsers, faTrophy, faCalendar, faRobot, faSchool, faTools, faBook, faHouse, faChartLine, faUser, faGears } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-const isCollapsed = ref(false); // Sidebar state (collapsed or expanded)
+
+const isCollapsed = ref(true); // Sidebar starts collapsed
 
 const navigation = [
-  { name: 'Dashboard', icon: HomeIcon, path: '/dashboard' },
-  { name: 'Onboarding', icon: faUsers, path: '/Onboarding' },
-  { name: 'Analytics', icon: ChartBarIcon, path: '/analytics' },
-  { name: 'InteractiveTools', icon: faTools, path: '/InteractiveTools' },
-  { name: 'ContentLibrary', icon: faBook, path: '/ContentLibrary' },
-  { name: 'Career Matching', icon: faSchool, path: '/CareerMatching' }, // Career Matching FontAwesome icon
-  { name: 'AI Chat Support', icon: faRobot, path: '/Aichatsupport' }, // AI Chat Support FontAwesome icon
-  { name: 'Study Time Table', icon: faCalendar, path: '/timetable' }, // Study Time Table FontAwesome icon
-  { name: 'Gamification', icon: faTrophy, path: '/gamificationt' }, // Gamification FontAwesome icon
-  { name: 'Users', icon: UsersIcon, path: '/users' },
-  { name: 'Settings', icon: CogIcon, path: '/settings' },
+  { name: 'Dashboard', icon: faHouse, path: '/dashboard' },
+  { name: 'Onboarding', icon: faUsers, path: '/onboarding' },
+  { name: 'Analytics', icon: faChartLine, path: '/analytics' },
+  { name: 'Interactive Tools', icon: faTools, path: '/interactive-tools' },
+  { name: 'Content Library', icon: faBook, path: '/content-library' },
+  { name: 'Career Matching', icon: faSchool, path: '/career-matching' },
+  { name: 'AI Chat Support', icon: faRobot, path: '/ai-chat-support' },
+  { name: 'Study Time Table', icon: faCalendar, path: '/timetable' },
+  { name: 'Gamification', icon: faTrophy, path: '/gamification' },
+  { name: 'Users', icon: faUser, path: '/users' },
+  { name: 'Settings', icon: faGears, path: '/settings' },
 ];
 
-const isHeroIcon = (icon) => {
-  return [HomeIcon, ChartBarIcon, UsersIcon, CogIcon].includes(icon);
-};
+const isHeroIcon = (icon) => [HomeIcon, ChartBarIcon, UsersIcon, CogIcon].includes(icon);
 
-// Toggle the sidebar state between collapsed and expanded
 const toggleSidebar = () => {
   isCollapsed.value = !isCollapsed.value;
 };
 
-// Close the sidebar when a navigation item is clicked (mobile view)
-const handleNavigationClick = () => {
-  if (isCollapsed.value) {
-    // If sidebar is collapsed, toggle it to expand
-    toggleSidebar();
-  }
+const openSidebarOnHover = () => {
+  if (isCollapsed.value) isCollapsed.value = false;
+};
+
+const closeSidebarOnClick = () => {
+  if (!isCollapsed.value) isCollapsed.value = true;
+};
+
+const closeSidebarOnMouseLeave = () => {
+  if (!isCollapsed.value) isCollapsed.value = true;
 };
 </script>
 
 <style scoped>
-/* Small screen - collapsed sidebar */
 @media (max-width: 768px) {
-  .sidebar {
-    transition: width 0.3s ease;
-    width: 60px;  /* Collapsed width (small screens) */
-  }
-}
-
-/* Always visible burger menu button, even on larger screens */
-@media (min-width: 768px) {
-  .sidebar button {
-    display: block; /* Make the button visible on larger screens */
+  .fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 50;
   }
 }
 </style>

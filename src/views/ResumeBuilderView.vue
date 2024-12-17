@@ -12,25 +12,20 @@
     >
       <!-- Top Navigation Component -->
       <TopNavigation />
-      <div style="height:510px !important;">
-        <Onboarding />
+      <div class="pt-3 pb-5">
+        <ResumeBuilder />
       </div>
+    
     </div>
   </div>
 </template>
 
 <script>
-import Onboarding from "../components/Onboarding.vue";
+import ResumeBuilder from "../components/ResumeBuilder.vue";
 import Sidebar from "../components/Sidebar.vue";
 import TopNavigation from "../components/TopNavigation.vue";
-
 export default {
-  name: "OnboardingView",
-  components: {
-    Sidebar,
-    TopNavigation,
-    Onboarding,
-  },
+  components: { ResumeBuilder, Sidebar, TopNavigation },
   data() {
     return {
       isSidebarCollapsed: false, // Track whether the sidebar is collapsed

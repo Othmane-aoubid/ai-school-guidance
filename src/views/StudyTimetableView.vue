@@ -61,59 +61,61 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
 import Chart from "chart.js/auto";
 import Sidebar from "../components/Sidebar.vue";
 import TopNavigation from "../components/TopNavigation.vue";
-import TimeTable from "../components/TimeTable.vue"
+import TimeTable from "../components/TimeTable.vue";
 
 export default {
   name: "StudyTimetableView",
-  components:{
-    Sidebar,TopNavigation, TimeTable
+  components: {
+    Sidebar,
+    TopNavigation,
+    TimeTable,
   },
-  setup() {
-    const timetable = ref([
-      {
-        subject: "Mathematics",
-        time: "09:00 AM - 10:30 AM",
-        description: "Calculus: Limits and Continuity",
-        duration: 90,
-        completed: false,
-      },
-      {
-        subject: "Physics",
-        time: "11:00 AM - 12:30 PM",
-        description: "Mechanics: Newton's Laws",
-        duration: 90,
-        completed: false,
-      },
-      {
-        subject: "Computer Science",
-        time: "02:00 PM - 03:30 PM",
-        description: "Data Structures: Binary Trees",
-        duration: 90,
-        completed: true,
-      },
-      {
-        subject: "English Literature",
-        time: "04:00 PM - 05:30 PM",
-        description: "Shakespeare: Hamlet Analysis",
-        duration: 90,
-        completed: false,
-      },
-    ]);
-
-    const weeklyChart = ref(null);
-
-    const toggleComplete = (index) => {
-      timetable.value[index].completed = !timetable.value[index].completed;
-      // Here you would typically update Firebase
-      // firebase.firestore().collection('sessions').doc(sessionId).update({ completed: timetable.value[index].completed })
+  data() {
+    return {
+      timetable: [
+        {
+          subject: "Mathematics",
+          time: "09:00 AM - 10:30 AM",
+          description: "Calculus: Limits and Continuity",
+          duration: 90,
+          completed: false,
+        },
+        {
+          subject: "Physics",
+          time: "11:00 AM - 12:30 PM",
+          description: "Mechanics: Newton's Laws",
+          duration: 90,
+          completed: false,
+        },
+        {
+          subject: "Computer Science",
+          time: "02:00 PM - 03:30 PM",
+          description: "Data Structures: Binary Trees",
+          duration: 90,
+          completed: true,
+        },
+        {
+          subject: "English Literature",
+          time: "04:00 PM - 05:30 PM",
+          description: "Shakespeare: Hamlet Analysis",
+          duration: 90,
+          completed: false,
+        },
+      ],
+      weeklyChart: null,
     };
-
-    onMounted(() => {
-      const ctx = weeklyChart.value.getContext("2d");
+  },
+  methods: {
+    toggleComplete(index) {
+      this.timetable[index].completed = !this.timetable[index].completed;
+      // Here you would typically update Firebase
+      // firebase.firestore().collection('sessions').doc(sessionId).update({ completed: this.timetable[index].completed })
+    },
+    initializeChart() {
+      const ctx = this.weeklyChart.getContext("2d");
       new Chart(ctx, {
         type: "bar",
         data: {
@@ -149,13 +151,11 @@ export default {
           },
         },
       });
-    });
-
-    return {
-      timetable,
-      weeklyChart,
-      toggleComplete,
-    };
+    },
+  },
+  mounted() {
+    this.initializeChart(); // Initialize chart when component is mounted
   },
 };
 </script>
+
