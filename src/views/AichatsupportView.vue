@@ -5,9 +5,10 @@
     
     <div class="flex-1 flex flex-col overflow-hidden transition-all duration-300"
       :class="{
-        'ml-16 sm:ml-16 md:ml-64': !isSidebarCollapsed,
-        'ml-16': isSidebarCollapsed
+        'sm:ml-16 md:ml-64': !isSidebarCollapsed,
+        'sm-16': isSidebarCollapsed
       }"
+      style="margin-left:0 !important"
     >
       <!-- Top Navigation Component -->
       <TopNavigation class="sticky top-0 z-10" />
