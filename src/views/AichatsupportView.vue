@@ -1,53 +1,54 @@
 <template>
   <div class="flex h-screen bg-gray-100">
     <!-- Sidebar Component -->
-    <Sidebar />
-    <div
-      :class="[
-        'flex-1 flex flex-col overflow-hidden',
-        { 'ml-16': !isSidebarCollapsed }, // Apply margin on smaller screens if the sidebar is expanded
-        'sm:ml-16', // This applies margin-left on small screens only (from 'sm' breakpoint and down)
-        'md:ml-0'
-      ]"
+    <Sidebar @toggle-sidebar="toggleSidebar" />
+    
+    <div class="flex-1 flex flex-col overflow-hidden transition-all duration-300"
+      :class="{
+        'ml-16 sm:ml-16 md:ml-64': !isSidebarCollapsed,
+        'ml-16': isSidebarCollapsed
+      }"
     >
       <!-- Top Navigation Component -->
-      <TopNavigation />
+      <TopNavigation class="sticky top-0 z-10" />
+      
       <!-- Main Content -->
-      <div class="space-y-8 p-5 overflow-y-auto">
-        <!-- <div class="bg-white rounded-lg shadow p-4">
-          <!-- Chat History 
-          <div class="chat-history space-y-4">
-            <!-- Loop through messages dynamically 
-            <div
-              v-for="(message, index) in messages"
-              :key="index"
-              :class="message.isUser ? 'flex justify-end' : 'flex'"
-            >
-              <div
-                :class="message.isUser ? 'bg-blue-500' : 'bg-gray-200'"
-                class="p-3 rounded-lg text-black max-w-xs"
-              >
-                {{ message.text }}
-              </div>
-            </div>
-          </div>
+      <div class="flex-1 p-4 md:p-6 overflow-y-auto">
+        <!-- Welcome Section -->
+        <div class="mb-6">
+          <h1 class="text-2xl md:text-3xl font-bold text-gray-800">AI Support Chat</h1>
+          <p class="text-gray-600 mt-2">Get instant help with your questions</p>
+        </div>
 
-          <!-- Message Input 
-          <div class="mt-4">
-            <input
-              v-model="userMessage"
-              @keyup.enter="sendMessage"
-              type="text"
-              placeholder="Type a message..."
-              class="w-full p-3 border rounded-lg"
-            />
-            <button class="text-white mt-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" @click="sendMessage">Send</button>
+        <!-- Chat Container -->
+        <div class="bg-white rounded-lg shadow-lg max-w-4xl mx-auto">
+          <div class="p-4 border-b border-gray-200">
+            <h2 class="text-lg font-semibold text-gray-700">Chat Session</h2>
           </div>
-        </div> -->
-        <Chatbot />
+          
+          <!-- Chatbot Component with proper spacing -->
+          <div class="p-4">
+            <Chatbot class="min-h-[400px] max-h-[600px]" />
+          </div>
+        </div>
+
+        <!-- Help Section -->
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+          <div class="bg-white p-4 rounded-lg shadow-md">
+            <h3 class="font-semibold text-gray-700 mb-2">Quick Tips</h3>
+            <ul class="text-gray-600 space-y-2">
+              <li>• Be specific with your questions</li>
+              <li>• Use clear and concise language</li>
+              <li>• One question at a time for best results</li>
+            </ul>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-md">
+            <h3 class="font-semibold text-gray-700 mb-2">Support Hours</h3>
+            <p class="text-gray-600">AI Support is available 24/7</p>
+            <p class="text-gray-600 mt-2">Human support: Mon-Fri, 9AM-5PM</p>
+          </div>
+        </div>
       </div>
-
-
     </div>
   </div>
 </template>
@@ -56,7 +57,6 @@
 import Sidebar from "../components/Sidebar.vue";
 import TopNavigation from "../components/TopNavigation.vue";
 import Chatbot from "../components/Chatbot.vue";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export default {
   name: "ChatSupport",
@@ -67,7 +67,7 @@ export default {
   },
   data() {
     return {
-      isSidebarCollapsed: false, // Track whether the sidebar is collapsed
+      isSidebarCollapsed: window.innerWidth < 768, // Collapse sidebar by default on mobile
     };
   },
   methods: {
@@ -75,6 +75,28 @@ export default {
       this.isSidebarCollapsed = !this.isSidebarCollapsed;
     },
   },
+  mounted() {
+    // Handle responsive sidebar on window resize
+    window.addEventListener('resize', this.handleResize);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  },
+  methods: {
+    handleResize() {
+      if (window.innerWidth < 768) {
+        this.isSidebarCollapsed = true;
+      }
+    },
+  },
 };
 </script>
 
+<style scoped>
+/* Add smooth transitions */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+</style>

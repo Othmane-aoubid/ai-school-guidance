@@ -113,48 +113,48 @@ export default {
       this.timetable[index].completed = !this.timetable[index].completed;
       // Here you would typically update Firebase
       // firebase.firestore().collection('sessions').doc(sessionId).update({ completed: this.timetable[index].completed })
-    },
-    initializeChart() {
-      const ctx = this.weeklyChart.getContext("2d");
-      new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday",
-          ],
-          datasets: [
-            {
-              label: "Study Hours",
-              data: [3, 5, 4, 6, 3, 2, 1],
-              backgroundColor: "#3B82F6",
-              borderColor: "#2563EB",
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: "Hours",
-              },
-            },
-          },
-        },
-      });
-    },
+     },
+    // initializeChart() {
+    //   const ctx = this.weeklyChart.getContext("2d");
+    //   new Chart(ctx, {
+    //     type: "bar",
+    //     data: {
+    //       labels: [
+    //         "Monday",
+    //         "Tuesday",
+    //         "Wednesday",
+    //         "Thursday",
+    //         "Friday",
+    //         "Saturday",
+    //         "Sunday",
+    //       ],
+    //       datasets: [
+    //         {
+    //           label: "Study Hours",
+    //           data: [3, 5, 4, 6, 3, 2, 1],
+    //           backgroundColor: "#3B82F6",
+    //           borderColor: "#2563EB",
+    //           borderWidth: 1,
+    //         },
+    //       ],
+    //     },
+    //     options: {
+    //       responsive: true,
+    //       scales: {
+    //         y: {
+    //           beginAtZero: true,
+    //           title: {
+    //             display: true,
+    //             text: "Hours",
+    //           },
+    //         },
+    //       },
+    //     },
+    //   });
+    // },
   },
   mounted() {
-    this.initializeChart(); // Initialize chart when component is mounted
+    // this.initializeChart(); // Initialize chart when component is mounted
   },
 };
 </script>
