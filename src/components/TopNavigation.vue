@@ -3,7 +3,7 @@
     <div class="px-4 h-16 flex items-center justify-between">
       <!-- Search Section -->
       <div class="flex-1 max-w-lg">
-        <div class="relative">
+        <div class="relative ">
           <!-- Mobile search icon -->
           <button
             @click="toggleSearch"
@@ -11,11 +11,12 @@
             aria-label="Open search"
           >
             <svg
-              class="h-6 w-6 text-gray-600"
+              class="h-6 w-6 text-gray-600 "
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
               xmlns="http://www.w3.org/2000/svg"
+              style="color: orange; display: none !important;"
             >
               <path
                 stroke-linecap="round"
