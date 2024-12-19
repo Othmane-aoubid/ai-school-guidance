@@ -58,7 +58,7 @@
       <!-- Right section -->
       <div class="flex items-center space-x-4">
         <!-- Mobile Search Icon -->
-        <div class="relative">
+        <div class="relative lg:hidden">
           <button
             @click="toggleSearch"
             class="relative p-2 rounded-full hover:bg-gray-100 transition"
