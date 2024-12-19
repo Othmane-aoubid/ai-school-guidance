@@ -34,63 +34,22 @@
               placeholder="Search..."
               aria-label="Search"
               @input="debouncedSearch"
-              class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-150"
+              class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-100 focus:border-primary-300 transition-all duration-200 text-gray-700 placeholder-gray-400"
             />
-            <!-- Search suggestions dropdown -->
-            <div
-              v-if="showSuggestions && searchResults"
-              class="absolute w-full mt-1 bg-white rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto"
-            >
-              <!-- Pages -->
-              <div v-if="searchResults.pages?.length" class="p-2">
-                <h3 class="text-xs font-semibold text-gray-500 uppercase mb-2">
-                  Pages
-                </h3>
-                <button
-                  v-for="page in searchResults.pages"
-                  :key="page.path"
-                  @click="navigateToResult(page)"
-                  class="block w-full text-left p-2 hover:bg-gray-50 rounded cursor-pointer"
-                >
-                  <div class="font-medium">{{ page.title }}</div>
-                  <div class="text-sm text-gray-500">{{ page.preview }}</div>
-                </button>
-              </div>
-              <!-- Users -->
-              <div v-if="searchResults.users?.length" class="p-2 border-t">
-                <h3 class="text-xs font-semibold text-gray-500 uppercase mb-2">
-                  Users
-                </h3>
-                <button
-                  v-for="user in searchResults.users"
-                  :key="user.id"
-                  @click="navigateToResult(user)"
-                  class="block w-full text-left p-2 hover:bg-gray-50 rounded cursor-pointer flex items-center"
-                >
-                  <img :src="user.avatar" class="w-8 h-8 rounded-full mr-3" />
-                  <div>
-                    <div class="font-medium">{{ user.name }}</div>
-                    <div class="text-sm text-gray-500">{{ user.email }}</div>
-                  </div>
-                </button>
-              </div>
-              <!-- Content -->
-              <div v-if="searchResults.content?.length" class="p-2 border-t">
-                <h3 class="text-xs font-semibold text-gray-500 uppercase mb-2">
-                  Content
-                </h3>
-                <button
-                  v-for="item in searchResults.content"
-                  :key="item.path"
-                  @click="navigateToResult(item)"
-                  class="block w-full text-left p-2 hover:bg-gray-50 rounded cursor-pointer"
-                >
-                  <div class="font-medium">{{ item.title }}</div>
-                  <div class="text-sm text-gray-500">
-                    {{ item.description }}
-                  </div>
-                </button>
-              </div>
+            <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
+              <svg
+                class="h-5 w-5 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-4.35-4.35m1.65-5.65a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
             </div>
           </div>
         </div>
@@ -268,23 +227,33 @@
           <input
             v-model="searchQuery"
             type="search"
-            placeholder="Search..."
+            placeholder="Search anything..."
             aria-label="Search"
             @input="debouncedSearch"
-            class="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+            class="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-xl bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-100 focus:border-primary-300 transition-all duration-200 text-gray-700 placeholder-gray-400"
             autofocus
           />
+          <div class="absolute left-4 top-1/2 transform -translate-y-1/2">
+            <svg
+              class="h-5 w-5 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-4.35-4.35m1.65-5.65a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
           <button
             @click="toggleSearch"
-            class="absolute right-2 p-2 text-gray-500 hover:text-gray-700"
+            class="absolute right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
             aria-label="Close search"
           >
-            <svg
-              class="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -293,21 +262,6 @@
               />
             </svg>
           </button>
-          <div class="absolute left-3 top-1/2 transform -translate-y-1/2">
-            <svg
-              class="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </div>
         </div>
 
         <!-- Mobile search results -->
