@@ -1,59 +1,30 @@
 <template>
-  <div class="min-h-screen bg-slate-950 text-white p-4 lg:p-6" style="width:80%; margin-inline:auto;">
-    <!-- Header -->
-    <header
-      class="w-full p-3 sm:p-4 md:p-5 lg:p-6 bg-slate-900/50  rounded-xl shadow-lg mb-4 sm:mb-5 md:mb-6"
-    >
-      <div
-        class="flex flex-col xs:flex-col justify-between items-start xs:items-center gap-3 sm:gap-4 md:gap-5"
-      >
+  <div class="min-h-screen bg-slate-950 text-white p-4 lg:p-6" :style="isMobileView ? { width: '85%', marginLeft: 'auto' } : null">
+    <header class="w-full p-3 sm:p-4 md:p-5 lg:p-6 bg-slate-900/50 rounded-xl shadow-lg mb-4 sm:mb-5 md:mb-6">
+      <div class="flex flex-col xs:flex-col justify-between items-start xs:items-center gap-3 sm:gap-4 md:gap-5">
         <div class="w-full xs:w-auto md:flex-1">
-          <h1
-            class="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent truncate"
-          >
+          <h1 class="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent truncate">
             Student Analytics Dashboard
           </h1>
-          <p
-            class="text-xs sm:text-sm md:text-base text-slate-400 mt-0.5 sm:mt-1"
-          >
+          <p class="text-xs sm:text-sm md:text-base text-slate-400 mt-0.5 sm:mt-1">
             Academic Year 2023-2024 | Semester 2
           </p>
         </div>
 
-        <div
-          class="flex flex-col xs:flex-row gap-2 sm:gap-3 md:gap-4 w-full xs:w-auto md:min-w-[300px] lg:min-w-[350px]"
-        >
+        <div class="flex flex-col xs:flex-row gap-2 sm:gap-3 md:gap-4 w-full xs:w-auto md:min-w-[300px] lg:min-w-[350px]">
           <div class="relative w-full xs:w-auto md:flex-1">
-            <select
-              class="w-full bg-slate-800 rounded-lg px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base border border-slate-700 hover:border-slate-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/50 appearance-none cursor-pointer"
-            >
+            <select class="w-full bg-slate-800 rounded-lg px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm md:text-base border border-slate-700 hover:border-slate-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/50 appearance-none cursor-pointer">
               <option>Current Term</option>
               <option>Previous Term</option>
             </select>
-            <!-- Custom select arrow -->
-            <div
-              class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 9l-7 7-7-7"
-                />
+            <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
           </div>
 
-          <button
-            class="w-full xs:w-auto md:flex-1 bg-blue-600 hover:bg-blue-500 px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm md:text-base transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/50 active:bg-blue-700 font-medium"
-          >
+          <button class="w-full xs:w-auto md:flex-1 bg-blue-600 hover:bg-blue-500 px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm md:text-base transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/50 active:bg-blue-700 font-medium">
             Download Report
           </button>
         </div>
@@ -65,9 +36,7 @@
       <!-- Education Analytics -->
       <div class="bg-slate-900/50 backdrop-blur-sm p-5 rounded-xl shadow-lg">
         <div class="flex justify-between items-center mb-6">
-          <h2 class="text-lg font-semibold text-blue-400">
-            Education Analytics
-          </h2>
+          <h2 class="text-lg font-semibold text-blue-400">Education Analytics</h2>
           <div class="px-3 py-1 bg-blue-500/10 rounded-full">
             <span class="text-sm text-blue-400">GPA: 3.8</span>
           </div>
@@ -76,17 +45,7 @@
           <canvas id="educationChart"></canvas>
         </div>
         <div class="mt-4 flex flex-wrap gap-2">
-          <div
-            v-for="(subject, index) in [
-              'Math',
-              'Science',
-              'English',
-              'History',
-              'Art',
-            ]"
-            :key="index"
-            class="bg-slate-800/50 px-4 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-800 transition-colors"
-          >
+          <div v-for="(subject, index) in ['Math', 'Science', 'English', 'History', 'Art']" :key="index" class="bg-slate-800/50 px-4 py-2 rounded-lg text-sm text-slate-300 hover:bg-slate-800 transition-colors">
             {{ subject }}
           </div>
         </div>
@@ -95,9 +54,7 @@
       <!-- Behavioral Analytics -->
       <div class="bg-slate-900/50 backdrop-blur-sm p-5 rounded-xl shadow-lg">
         <div class="flex justify-between items-center mb-6">
-          <h2 class="text-lg font-semibold text-blue-400">
-            Behavioral Analytics
-          </h2>
+          <h2 class="text-lg font-semibold text-blue-400">Behavioral Analytics</h2>
           <div class="px-3 py-1 bg-blue-500/10 rounded-full">
             <span class="text-sm text-blue-400">Progress: 65%</span>
           </div>
@@ -106,19 +63,14 @@
           <canvas id="behaviorChart"></canvas>
         </div>
         <div class="mt-4 p-4 bg-slate-800/50 rounded-lg">
-          <p class="text-sm text-slate-300">
-            Student demonstrates strong leadership qualities and excellent
-            teamwork skills.
-          </p>
+          <p class="text-sm text-slate-300">Student demonstrates strong leadership qualities and excellent teamwork skills.</p>
         </div>
       </div>
 
       <!-- Attendance Metrics -->
       <div class="bg-slate-900/50 backdrop-blur-sm p-5 rounded-xl shadow-lg">
         <div class="flex justify-between items-center mb-6">
-          <h2 class="text-lg font-semibold text-blue-400">
-            Attendance Metrics
-          </h2>
+          <h2 class="text-lg font-semibold text-blue-400">Attendance Metrics</h2>
           <div class="px-3 py-1 bg-green-500/10 rounded-full">
             <span class="text-sm text-green-400">95% Present</span>
           </div>
@@ -145,9 +97,7 @@
       <!-- Performance Summary -->
       <div class="bg-slate-900/50 backdrop-blur-sm p-5 rounded-xl shadow-lg">
         <div class="flex justify-between items-center mb-6">
-          <h2 class="text-lg font-semibold text-blue-400">
-            Performance Summary
-          </h2>
+          <h2 class="text-lg font-semibold text-blue-400">Performance Summary</h2>
           <div class="px-3 py-1 bg-blue-500/10 rounded-full">
             <span class="text-sm text-blue-400">Grade: A-</span>
           </div>
@@ -156,15 +106,11 @@
           <canvas id="performanceChart"></canvas>
         </div>
         <div class="mt-4 space-y-3">
-          <div
-            class="flex justify-between items-center p-3 bg-slate-800/50 rounded-lg"
-          >
+          <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-lg">
             <span class="text-sm text-slate-300">Assignments Completed</span>
             <span class="text-sm text-green-400 font-semibold">28/30</span>
           </div>
-          <div
-            class="flex justify-between items-center p-3 bg-slate-800/50 rounded-lg"
-          >
+          <div class="flex justify-between items-center p-3 bg-slate-800/50 rounded-lg">
             <span class="text-sm text-slate-300">Average Score</span>
             <span class="text-sm text-blue-400 font-semibold">88%</span>
           </div>
@@ -172,9 +118,7 @@
       </div>
 
       <!-- Growth Trends -->
-      <div
-        class="bg-slate-900/50 backdrop-blur-sm p-5 rounded-xl shadow-lg lg:col-span-2"
-      >
+      <div class="bg-slate-900/50 backdrop-blur-sm p-5 rounded-xl shadow-lg lg:col-span-2">
         <div class="flex justify-between items-center mb-6">
           <h2 class="text-lg font-semibold text-blue-400">Growth Trends</h2>
           <div class="px-3 py-1 bg-blue-500/10 rounded-full">
@@ -213,6 +157,7 @@ import Chart from "chart.js/auto";
 export default {
   data() {
     return {
+      isMobileView: false,
       educationData: [70, 85, 90, 75, 88],
       behaviorData: [60, 80, 70, 90, 85],
       attendanceData: [95, 90, 88, 93, 92],
@@ -222,8 +167,17 @@ export default {
   },
   mounted() {
     this.initCharts();
+    this.checkScreenSize();
+    window.addEventListener('resize', this.checkScreenSize);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.checkScreenSize);
+    Chart.instances.forEach((chart) => chart.destroy());
   },
   methods: {
+    checkScreenSize() {
+      this.isMobileView = window.innerWidth <= 768; // Adjust breakpoint as needed
+    },
     initCharts() {
       // Education Analytics Chart
       new Chart(document.getElementById("educationChart"), {
@@ -452,10 +406,6 @@ export default {
         },
       });
     },
-  },
-  beforeUnmount() {
-    // Cleanup charts when component is destroyed
-    Chart.instances.forEach((chart) => chart.destroy());
   },
 };
 </script>
