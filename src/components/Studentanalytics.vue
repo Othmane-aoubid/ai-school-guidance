@@ -163,6 +163,7 @@ export default {
       attendanceData: [95, 90, 88, 93, 92],
       performanceData: [80, 75, 78, 85, 82],
       growthData: [50, 65, 75, 85, 95],
+      charts: [],
     };
   },
   mounted() {
@@ -172,7 +173,7 @@ export default {
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.checkScreenSize);
-    Chart.instances.forEach((chart) => chart.destroy());
+    this.charts.forEach(chart => chart.destroy());
   },
   methods: {
     checkScreenSize() {
@@ -180,231 +181,241 @@ export default {
     },
     initCharts() {
       // Education Analytics Chart
-      new Chart(document.getElementById("educationChart"), {
-        type: "bar",
-        data: {
-          labels: ["Math", "Science", "English", "History", "Art"],
-          datasets: [
-            {
-              label: "Subject Scores",
-              data: this.educationData,
-              backgroundColor: "rgba(59, 130, 246, 0.5)",
-              borderColor: "#3b82f6",
-              borderWidth: 2,
-              borderRadius: 8,
+      this.charts.push(
+        new Chart(document.getElementById("educationChart"), {
+          type: "bar",
+          data: {
+            labels: ["Math", "Science", "English", "History", "Art"],
+            datasets: [
+              {
+                label: "Subject Scores",
+                data: this.educationData,
+                backgroundColor: "rgba(59, 130, 246, 0.5)",
+                borderColor: "#3b82f6",
+                borderWidth: 2,
+                borderRadius: 8,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false,
+              },
             },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: {
+                  color: "rgba(148, 163, 184, 0.1)",
+                  drawBorder: false,
+                },
+                ticks: {
+                  color: "rgb(148, 163, 184)",
+                  font: { size: 11 },
+                  padding: 10,
+                },
+              },
+              x: {
+                grid: { display: false },
+                ticks: {
+                  color: "rgb(148, 163, 184)",
+                  font: { size: 11 },
+                },
+              },
             },
           },
-          scales: {
-            y: {
-              beginAtZero: true,
-              grid: {
-                color: "rgba(148, 163, 184, 0.1)",
-                drawBorder: false,
-              },
-              ticks: {
-                color: "rgb(148, 163, 184)",
-                font: { size: 11 },
-                padding: 10,
-              },
-            },
-            x: {
-              grid: { display: false },
-              ticks: {
-                color: "rgb(148, 163, 184)",
-                font: { size: 11 },
-              },
-            },
-          },
-        },
-      });
+        })
+      );
 
       // Behavioral Analytics Chart
-      new Chart(document.getElementById("behaviorChart"), {
-        type: "radar",
-        data: {
-          labels: ["Respect", "Focus", "Participation", "Attitude", "Teamwork"],
-          datasets: [
-            {
-              label: "Behavioral Scores",
-              data: this.behaviorData,
-              backgroundColor: "rgba(59, 130, 246, 0.2)",
-              borderColor: "#3b82f6",
-              pointBackgroundColor: "#3b82f6",
-              pointBorderColor: "#fff",
-              pointHoverBackgroundColor: "#fff",
-              pointHoverBorderColor: "#3b82f6",
+      this.charts.push(
+        new Chart(document.getElementById("behaviorChart"), {
+          type: "radar",
+          data: {
+            labels: ["Respect", "Focus", "Participation", "Attitude", "Teamwork"],
+            datasets: [
+              {
+                label: "Behavioral Scores",
+                data: this.behaviorData,
+                backgroundColor: "rgba(59, 130, 246, 0.2)",
+                borderColor: "#3b82f6",
+                pointBackgroundColor: "#3b82f6",
+                pointBorderColor: "#fff",
+                pointHoverBackgroundColor: "#fff",
+                pointHoverBorderColor: "#3b82f6",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              r: {
+                angleLines: { color: "rgba(148, 163, 184, 0.2)" },
+                grid: { color: "rgba(148, 163, 184, 0.2)" },
+                pointLabels: {
+                  color: "rgb(148, 163, 184)",
+                  font: { size: 11 },
+                },
+                ticks: {
+                  color: "rgb(148, 163, 184)",
+                  backdropColor: "transparent",
+                  font: { size: 11 },
+                },
+              },
             },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            r: {
-              angleLines: { color: "rgba(148, 163, 184, 0.2)" },
-              grid: { color: "rgba(148, 163, 184, 0.2)" },
-              pointLabels: {
-                color: "rgb(148, 163, 184)",
-                font: { size: 11 },
-              },
-              ticks: {
-                color: "rgb(148, 163, 184)",
-                backdropColor: "transparent",
-                font: { size: 11 },
-              },
+            plugins: {
+              legend: { display: false },
             },
           },
-          plugins: {
-            legend: { display: false },
-          },
-        },
-      });
+        })
+      );
 
       // Attendance Metrics Chart
-      new Chart(document.getElementById("attendanceChart"), {
-        type: "line",
-        data: {
-          labels: ["January", "February", "March", "April", "May"],
-          datasets: [
-            {
-              label: "Attendance %",
-              data: this.attendanceData,
-              borderColor: "#3b82f6",
-              backgroundColor: "rgba(59, 130, 246, 0.1)",
-              fill: true,
-              tension: 0.4,
-              pointBackgroundColor: "#3b82f6",
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
+      this.charts.push(
+        new Chart(document.getElementById("attendanceChart"), {
+          type: "line",
+          data: {
+            labels: ["January", "February", "March", "April", "May"],
+            datasets: [
+              {
+                label: "Attendance %",
+                data: this.attendanceData,
+                borderColor: "#3b82f6",
+                backgroundColor: "rgba(59, 130, 246, 0.1)",
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: "#3b82f6",
+              },
+            ],
           },
-          scales: {
-            y: {
-              min: 50,
-              max: 100,
-              grid: {
-                color: "rgba(148, 163, 184, 0.1)",
-                drawBorder: false,
-              },
-              ticks: {
-                color: "rgb(148, 163, 184)",
-                font: { size: 11 },
-              },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
             },
-            x: {
-              grid: { display: false },
-              ticks: {
-                color: "rgb(148, 163, 184)",
-                font: { size: 11 },
+            scales: {
+              y: {
+                min: 50,
+                max: 100,
+                grid: {
+                  color: "rgba(148, 163, 184, 0.1)",
+                  drawBorder: false,
+                },
+                ticks: {
+                  color: "rgb(148, 163, 184)",
+                  font: { size: 11 },
+                },
+              },
+              x: {
+                grid: { display: false },
+                ticks: {
+                  color: "rgb(148, 163, 184)",
+                  font: { size: 11 },
+                },
               },
             },
           },
-        },
-      });
+        })
+      );
 
       // Performance Summary Chart
-      new Chart(document.getElementById("performanceChart"), {
-        type: "doughnut",
-        data: {
-          labels: [
-            "Assignments",
-            "Quizzes",
-            "Exams",
-            "Projects",
-            "Participation",
-          ],
-          datasets: [
-            {
-              data: this.performanceData,
-              backgroundColor: [
-                "rgba(59, 130, 246, 0.8)",
-                "rgba(16, 185, 129, 0.8)",
-                "rgba(245, 158, 11, 0.8)",
-                "rgba(99, 102, 241, 0.8)",
-                "rgba(139, 92, 246, 0.8)",
-              ],
-              borderWidth: 0,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: "right",
-              labels: {
-                color: "rgb(148, 163, 184)",
-                padding: 20,
-                font: { size: 11 },
+      this.charts.push(
+        new Chart(document.getElementById("performanceChart"), {
+          type: "doughnut",
+          data: {
+            labels: [
+              "Assignments",
+              "Quizzes",
+              "Exams",
+              "Projects",
+              "Participation",
+            ],
+            datasets: [
+              {
+                data: this.performanceData,
+                backgroundColor: [
+                  "rgba(59, 130, 246, 0.8)",
+                  "rgba(16, 185, 129, 0.8)",
+                  "rgba(245, 158, 11, 0.8)",
+                  "rgba(99, 102, 241, 0.8)",
+                  "rgba(139, 92, 246, 0.8)",
+                ],
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "right",
+                labels: {
+                  color: "rgb(148, 163, 184)",
+                  padding: 20,
+                  font: { size: 11 },
+                },
               },
             },
+            cutout: "70%",
           },
-          cutout: "70%",
-        },
-      });
+        })
+      );
 
       // Growth Trends Chart
-      new Chart(document.getElementById("growthChart"), {
-        type: "line",
-        data: {
-          labels: ["Year 1", "Year 2", "Year 3", "Year 4", "Year 5"],
-          datasets: [
-            {
-              label: "Academic Growth",
-              data: this.growthData,
-              borderColor: "#3b82f6",
-              backgroundColor: "rgba(59, 130, 246, 0.1)",
-              fill: true,
-              tension: 0.4,
-              pointBackgroundColor: "#3b82f6",
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
+      this.charts.push(
+        new Chart(document.getElementById("growthChart"), {
+          type: "line",
+          data: {
+            labels: ["Year 1", "Year 2", "Year 3", "Year 4", "Year 5"],
+            datasets: [
+              {
+                label: "Academic Growth",
+                data: this.growthData,
+                borderColor: "#3b82f6",
+                backgroundColor: "rgba(59, 130, 246, 0.1)",
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: "#3b82f6",
+              },
+            ],
           },
-          scales: {
-            y: {
-              min: 0,
-              max: 100,
-              grid: {
-                color: "rgba(148, 163, 184, 0.1)",
-                drawBorder: false,
-              },
-              ticks: {
-                color: "rgb(148, 163, 184)",
-                font: { size: 11 },
-                callback: (value) => `${value}%`,
-              },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
             },
-            x: {
-              grid: { display: false },
-              ticks: {
-                color: "rgb(148, 163, 184)",
-                font: { size: 11 },
+            scales: {
+              y: {
+                min: 0,
+                max: 100,
+                grid: {
+                  color: "rgba(148, 163, 184, 0.1)",
+                  drawBorder: false,
+                },
+                ticks: {
+                  color: "rgb(148, 163, 184)",
+                  font: { size: 11 },
+                  callback: (value) => `${value}%`,
+                },
+              },
+              x: {
+                grid: { display: false },
+                ticks: {
+                  color: "rgb(148, 163, 184)",
+                  font: { size: 11 },
+                },
               },
             },
           },
-        },
-      });
+        })
+      );
     },
   },
 };
