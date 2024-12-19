@@ -7,20 +7,30 @@
     ]"
     @mouseleave="closeSidebarOnMouseLeave"
   >
-    <div class="flex items-center justify-between p-4">
-      <h1
-        :class="[
-          'font-bold overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out',
-          isCollapsed ? 'text-lg opacity-0' : 'text-2xl opacity-100',
-        ]"
-      >
-        My App
-      </h1>
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between p-4">
+      <div class="flex items-center space-x-3">
+          <div class="flex-shrink-0">
+            <font-awesome-icon 
+              :icon="faRobot" 
+              class="w-8 h-8 text-blue-400"
+              aria-hidden="true"
+            />
+          </div>
+          <div
+            :class="[
+              'font-bold overflow-hidden whitespace-nowrap transition-all duration-300',
+              isCollapsed ? 'opacity-0 lg:w-0' : 'opacity-100 w-auto',
+            ]"
+          >
+            <h1 class="text-lg">AI Student</h1>
+            <p class="text-xs text-gray-400">Guidance System</p>
+          </div>
+        </div>
 
       <!-- Hamburger Button -->
       <button
         @click="toggleSidebar"
-        class="p-1 rounded-lg hover:bg-gray-700 transition-colors"
+        class="mt-4 lg:mt-0 p-1 rounded-lg hover:bg-gray-700 transition-colors"
       >
         <component :is="isCollapsed ? Bars3Icon : XMarkIcon" class="w-6 h-6" />
       </button>
@@ -59,7 +69,8 @@ import { HomeIcon, ChartBarIcon, UsersIcon, CogIcon } from '@heroicons/vue/24/ou
 import { faUsers, faTrophy, faCalendar, faRobot, faSchool, faTools, faBook, faHouse, faChartLine, faUser, faGears } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-const isCollapsed = ref(true); // Sidebar starts collapsed
+const isCollapsed = ref(true);
+const isMenuClicked = ref(false);
 
 const navigation = [
   { name: 'Dashboard', icon: faHouse, path: '/dashboard' },
@@ -79,18 +90,30 @@ const isHeroIcon = (icon) => [HomeIcon, ChartBarIcon, UsersIcon, CogIcon].includ
 
 const toggleSidebar = () => {
   isCollapsed.value = !isCollapsed.value;
+  isMenuClicked.value = !isCollapsed.value;
 };
 
 const openSidebarOnHover = () => {
-  if (isCollapsed.value) isCollapsed.value = false;
+  if (window.innerWidth <= 768) {
+    isCollapsed.value = false;
+  } else if (isCollapsed.value && !isMenuClicked.value) {
+    isCollapsed.value = false;
+  }
 };
 
 const closeSidebarOnClick = () => {
-  if (!isCollapsed.value) isCollapsed.value = true;
+  if (!isCollapsed.value) {
+    isCollapsed.value = true;
+    isMenuClicked.value = false;
+  }
 };
 
 const closeSidebarOnMouseLeave = () => {
-  if (!isCollapsed.value) isCollapsed.value = true;
+  if (window.innerWidth <= 768) {
+    isCollapsed.value = true;
+  } else if (!isCollapsed.value && !isMenuClicked.value) {
+    isCollapsed.value = true;
+  }
 };
 </script>
 
