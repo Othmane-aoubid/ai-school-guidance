@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <title>Professional Resume</title>
+</head>
+<body>
+   <div class="header">
+       <h1>{{ personal_info.name }}</h1>
+       <p>
+           {{ personal_info.email }} | {{ personal_info.phone }} | {{ personal_info.location }}
+           {% if personal_info.linkedin %}| <a href="{{ personal_info.linkedin }}">LinkedIn</a>{% endif %}
+           {% if personal_info.website %}| <a href="{{ personal_info.website }}">Portfolio</a>{% endif %}
+       </p>
+   </div>
+    {% if summary %}
+   <div class="section">
+       <h2 class="section-title">Professional Summary</h2>
+       <p>{{ summary }}</p>
+   </div>
+   {% endif %}
+    {% if experience %}
+   <div class="section">
+       <h2 class="section-title">Experience</h2>
+       {% for job in experience %}
+       <div class="experience-item">
+           <h3>{{ job.title }} at {{ job.company }}</h3>
+           <p class="date-location">
+               {{ job.startDate }} - {{ job.endDate or 'Present' }} | {{ job.location }}
+           </p>
+           <p class="description">{{ job.description }}</p>
+       </div>
+       {% endfor %}
+   </div>
+   {% endif %}
+    {% if education %}
+   <div class="section">
+       <h2 class="section-title">Education</h2>
+       {% for edu in education %}
+       <div class="education-item">
+           <h3>{{ edu.degree }}</h3>
+           <p>{{ edu.school }} | {{ edu.year }}</p>
+       </div>
+       {% endfor %}
+   </div>
+   {% endif %}
+    {% if skills %}
+   <div class="section">
+       <h2 class="section-title">Skills</h2>
+       <ul class="skills-list">
+           {% for skill in skills %}
+           <li>{{ skill }}</li>
+           {% endfor %}
+       </ul>
+   </div>
+   {% endif %}
+</body>
+</html>

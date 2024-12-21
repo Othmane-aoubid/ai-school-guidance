@@ -65,11 +65,14 @@
         Submit Feedback
       </button>
     </form>
+    <button @click="generateResume">Generate Resume</button>
+    <button @click="getTemplates">Get Templates</button>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import axios from 'axios';
 
 const questions = ref([
   {
@@ -96,4 +99,39 @@ const answers = ref({});
 const submitForm = () => {
   console.log("Form submitted:", answers.value);
 };
+
+async function generateResume() {
+  try {
+    const response = await axios.post('http://localhost:5000/api/generate-pdf', {
+      template: 'professional',
+      styling: {
+        // Your styling options
+      },
+      content: {
+        // Your resume content
+      }
+    }, {
+      responseType: 'blob' // Important for receiving PDF files
+    });
+    
+    // Create a download link for the PDF
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'resume.pdf');
+    document.body.appendChild(link);
+    link.click();
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+  }
+}
+
+async function getTemplates() {
+  try {
+    const response = await axios.get('http://localhost:5000/api/templates');
+    console.log('Available templates:', response.data);
+  } catch (error) {
+    console.error('Error fetching templates:', error);
+  }
+}
 </script>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Modern Resume</title>
+</head>
+<body>
+    <div class="header modern">
+        <div class="name-title">
+            <h1>{{ personal_info.name }}</h1>
+        </div>
+        <div class="contact-info">
+            <p>
+                {{ personal_info.email }} • {{ personal_info.phone }} • {{ personal_info.location }}
+                {% if personal_info.linkedin %}• <a href="{{ personal_info.linkedin }}">LinkedIn</a>{% endif %}
+                {% if personal_info.website %}• <a href="{{ personal_info.website }}">Portfolio</a>{% endif %}
+            </p>
+        </div>
+    </div>
+
+    {% if summary %}
+    <div class="section">
+        <h2 class="section-title modern">About Me</h2>
+        <p>{{ summary }}</p>
+    </div>
+    {% endif %}
+
+    {% if experience %}
+    <div class="section">
+        <h2 class="section-title modern">Professional Experience</h2>
+        {% for job in experience %}
+        <div class="experience-item modern">
+            <div class="job-header">
+                <h3>{{ job.title }}</h3>
+                <span class="company">{{ job.company }}</span>
+            </div>
+            <p class="date-location modern">
+                {{ job.startDate }} - {{ job.endDate or 'Present' }} | {{ job.location }}
+            </p>
+            <p class="description">{{ job.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if education %}
+    <div class="section">
+        <h2 class="section-title modern">Education</h2>
+        {% for edu in education %}
+        <div class="education-item modern">
+            <h3>{{ edu.degree }}</h3>
+            <p>{{ edu.school }} | {{ edu.year }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if skills %}
+    <div class="section">
+        <h2 class="section-title modern">Skills & Expertise</h2>
+        <div class="skills-grid">
+            {% for skill in skills %}
+            <span class="skill-tag">{{ skill }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</body>
+</html>

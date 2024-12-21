@@ -5,15 +5,17 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <!-- Career Path Explorer -->
       <div class="bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-xl font-semibold mb-4">Career Path Explorer</h3>
+        <h3 class="text-xl font-semibold mb-4">Job Search</h3>
         <p class="mb-4">
-          Visualize different career paths and their potential outcomes.
+          Search for jobs based on your skills, experience, and preferences.
         </p>
-        <button
-          class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition duration-300"
-        >
-          Explore Careers
-        </button>
+        <router-link to="/job-search">
+          <button
+            class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition duration-300"
+          >
+            Search Jobs
+          </button>
+        </router-link>
       </div>
 
       <!-- Skill Assessment Quiz -->
@@ -41,16 +43,14 @@
       </div>
       <div class="bg-white p-6 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold mb-4">Resume Builder</h3>
-        <p class="mb-4">
-          Build youre own custome resume
-        </p>
+        <p class="mb-4">Build youre own custome resume</p>
         <router-link to="/resume-builder">
-        <button
-          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300"
-        >
-          Build Resume
-        </button>
-        </router-link> 
+          <button
+            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300"
+          >
+            Build Resume
+          </button>
+        </router-link>
       </div>
     </div>
   </div>

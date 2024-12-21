@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Minimal Resume</title>
+</head>
+<body>
+    <div class="header minimal">
+        <h1>{{ personal_info.name }}</h1>
+        <p class="contact-info minimal">
+            {{ personal_info.email }} · {{ personal_info.phone }} · {{ personal_info.location }}
+            {% if personal_info.linkedin %}· <a href="{{ personal_info.linkedin }}">LinkedIn</a>{% endif %}
+            {% if personal_info.website %}· <a href="{{ personal_info.website }}">Portfolio</a>{% endif %}
+        </p>
+    </div>
+
+    {% if summary %}
+    <div class="section minimal">
+        <h2 class="section-title minimal">Summary</h2>
+        <p>{{ summary }}</p>
+    </div>
+    {% endif %}
+
+    {% if experience %}
+    <div class="section minimal">
+        <h2 class="section-title minimal">Experience</h2>
+        {% for job in experience %}
+        <div class="experience-item minimal">
+            <div class="job-header minimal">
+                <h3>{{ job.title }} | {{ job.company }}</h3>
+                <span class="date-location minimal">{{ job.startDate }} - {{ job.endDate or 'Present' }} | {{ job.location }}</span>
+            </div>
+            <p class="description minimal">{{ job.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if education %}
+    <div class="section minimal">
+        <h2 class="section-title minimal">Education</h2>
+        {% for edu in education %}
+        <div class="education-item minimal">
+            <h3>{{ edu.degree }} | {{ edu.school }}</h3>
+            <p>{{ edu.year }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if skills %}
+    <div class="section minimal">
+        <h2 class="section-title minimal">Skills</h2>
+        <p class="skills-list minimal">
+            {{ skills|join(' · ') }}
+        </p>
+    </div>
+    {% endif %}
+</body>
+</html> 

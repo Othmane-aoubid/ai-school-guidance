@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-white shadow-sm">
+  <div class="bg-white shadow-sm" :class="{ dark: isDark }">
     <div class="px-4 h-16 flex items-center justify-between">
       <!-- Search Section -->
       <div class="flex-1 max-w-lg">
-        <div class="relative ">
+        <div class="relative">
           <!-- Mobile search icon -->
           <button
             @click="toggleSearch"
@@ -11,12 +11,12 @@
             aria-label="Open search"
           >
             <svg
-              class="h-6 w-6 text-gray-600 "
+              class="h-6 w-6 text-gray-600"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
               xmlns="http://www.w3.org/2000/svg"
-              style="color: orange; display: none !important;"
+              style="color: orange; display: none !important"
             >
               <path
                 stroke-linecap="round"
@@ -58,6 +58,18 @@
 
       <!-- Right section -->
       <div class="flex items-center space-x-4">
+         <!-- Add Dark Mode Toggle -->
+         <!-- <button
+          @click="toggleDark"
+          class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+          aria-label="Toggle Dark Mode"
+        >
+          <font-awesome-icon
+            :icon="isDark ? faSun : faMoon"
+            class="h-6 w-6 text-gray-600 dark:text-gray-300"
+          />
+          darkmode/lightmode
+        </button> -->
         <!-- Mobile Search Icon -->
         <div class="relative lg:hidden">
           <button
@@ -254,7 +266,12 @@
             class="absolute right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
             aria-label="Close search"
           >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -325,9 +342,15 @@
 </template>
 
 <script>
-import { faMagnifyingGlass, faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMagnifyingGlass,
+  faSearch,
+  faMoon,
+  faSun,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { globalSearch } from "../utils/search";
+import { useDark, useToggle } from "@vueuse/core";
 
 // Debounce utility function
 function debounce(fn, delay) {
@@ -340,9 +363,10 @@ function debounce(fn, delay) {
 
 export default {
   components: {
-    FontAwesomeIcon,
     faMagnifyingGlass,
-    faSearch
+    faSearch,
+    faMoon,
+    faSun,
   },
   data() {
     return {
@@ -371,6 +395,13 @@ export default {
     this.debouncedSearch = debounce(this.handleSearch, 300);
   },
   methods: {
+    toggleDark() {
+      const isDark = useDark();
+      // Create the toggle function for isDark
+      const toggle = useToggle(isDark);
+      toggle(); // Execute toggle
+      console.log("toggleDark", toggle);
+    },
     async handleSearch() {
       if (this.searchQuery.length < 2) {
         this.searchResults = null;
@@ -449,7 +480,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .myicon {
   width: 50px;
   height: 50px;
