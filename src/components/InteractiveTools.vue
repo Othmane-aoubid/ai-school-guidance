@@ -22,11 +22,13 @@
       <div class="bg-white p-6 rounded-lg shadow-md">
         <h3 class="text-xl font-semibold mb-4">Skill Assessment Quiz</h3>
         <p class="mb-4">Test your skills and identify areas for improvement.</p>
+        <router-link to="/skill-assessment">
         <button
           class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-300"
         >
-          Take Quiz
-        </button>
+            Take Quiz
+          </button>
+        </router-link>
       </div>
 
       <!-- Virtual Job Shadow -->

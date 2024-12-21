@@ -18,6 +18,7 @@ import InteractiveToolsView from "../views/InteractiveToolsView.vue";
 import ContentLibraryView from "../views/ContentLibraryView.vue";
 import ResumeBuilderView from "../views/ResumeBuilderView.vue";
 import CareerPathPage from "../components/CareerPathPage.vue";
+import SkillAssessmentQuiz from "../components/SkillAssessmentQuiz.vue";
 
 const routes = [
   {
@@ -116,6 +117,15 @@ const routes = [
     component: CareerPathPage,
     meta: {
       title: "Career Path Explorer",
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/skill-assessment",
+    name: "skill-assessment",
+    component: SkillAssessmentQuiz,
+    meta: {
+      title: "Skill Assessment",
       requiresAuth: true,
     },
   },
