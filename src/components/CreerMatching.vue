@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-slate-950 text-white p-4 lg:p-6" style="width:80%; margin-inline:auto">
+  <div class="creermatchingpage bg-slate-950 text-white p-4 lg:p-6">
     <!-- Header -->
     <header class="w-full p-3 sm:p-4 md:p-5 lg:p-6 bg-slate-900/50 rounded-xl shadow-lg mb-4 sm:mb-5 md:mb-6">
       <div class="flex flex-col xs:flex-col justify-between items-start xs:items-center gap-3 sm:gap-4 md:gap-5">

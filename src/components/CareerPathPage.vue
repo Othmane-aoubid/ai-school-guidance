@@ -1,27 +1,27 @@
 <template>
-  <div class="flex h-screen bg-gray-100">
+  <div class="creerpathpage flex h-screen bg-gray-100 overflow-hidden">
     <!-- Sidebar Component -->
     <Sidebar @toggle-sidebar="toggleSidebar" />
 
     <div
-      class="flex-1 flex flex-col overflow-x-hidden overflow-y-auto transition-all duration-300"
-      :class="{
-        'sm:ml-16': !isSidebarCollapsed && window.innerWidth >= 640,
-        'sm:ml-16': isSidebarCollapsed && window.innerWidth >= 640,
-      }"
+      class="creerpathpage2 flex-1 flex flex-col overflow-y-scroll transition-all duration-300"
       style="margin-left: 0 !important"
     >
       <!-- Top Navigation Component -->
       <TopNavigation class="sticky top-0 z-10" />
 
       <div
-        class="min-h-screen bg-gray-100 mx-auto w-full px-4 sm:w-[95%] md:w-[95%] lg:w-[80%]"
+        class=" bg-gray-100 mx-auto w-full px-4 mt-5 "
         :class="{
           'sm:ml-16': !isSidebarCollapsed && window.innerWidth >= 640,
           'sm:ml-16': isSidebarCollapsed && window.innerWidth >= 640,
         }"
       >
-        <!-- Beta Notification Banner -->
+        <!-- Header section with filters -->
+        <header class="bg-white shadow-md">
+        
+          <div class="container mx-auto px-4 py-6">
+            <!-- Beta Notification Banner -->
         <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-4 mt-4 "
         :class="{
           'sm:ml-16': !isSidebarCollapsed && window.innerWidth >= 640,
@@ -50,10 +50,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Header section with filters -->
-        <header class="bg-white shadow-md">
-          <div class="container mx-auto px-4 py-6">
             <h1 class="text-3xl font-bold text-gray-800 mb-4">
               Search For A Job
             </h1>
