@@ -2,7 +2,7 @@
   <div
     :class="[
       'bg-gray-800 text-white fixed lg:relative top-0 bottom-0 z-50',
-      isCollapsed ? 'w-16 h-[120px] opacity-50 hover:opacity-100 ' : 'w-64 h-screen opacity-100',
+      isCollapsed ? 'w-16 h-[120px] opacity-50 hover:opacity-100 ' : 'w-64 h-screen opacity-100 overflow-auto',
       'transition-all duration-500 ease-in-out',
     ]"
     @mouseleave="closeSidebarOnMouseLeave"
@@ -21,7 +21,7 @@
         <div
           :class="[
             'font-bold overflow-hidden whitespace-nowrap transition-all duration-300',
-            isCollapsed ? 'opacity-0 lg:w-0' : 'opacity-100 w-auto',
+            isCollapsed ? 'opacity-0 lg:w-0' : 'opacity-100 w-auto overflow-auto',
           ]"
         >
           <h1 class="text-lg">AI Student</h1>
@@ -157,6 +157,7 @@ const closeSidebarOnMouseLeave = () => {
     left: 0;
     bottom: 0;
     z-index: 50;
+    display: block;
   }
 }
 </style>
