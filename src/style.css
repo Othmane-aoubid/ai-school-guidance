@@ -18,3 +18,31 @@ body {
   padding-block: 1rem;
   height: 20px;
 }
+/* Navigation Button Styles */
+.vis-button {
+  background-color:greenyellow !important;
+  color: blue !important;/* Semi-transparent white background */
+}
+
+.vis-button:hover {
+  background-color:blue !important;
+  color: blue !important;
+}
+
+/* Navigation Icons Color */
+.vis-button:after {
+  border-color: white !important; /* Make arrows white */
+}
+
+/* Specifically target the zoom in/out icons */
+.vis-zoomIn:after,
+.vis-zoomOut:after,
+.vis-zoomExtends:after {
+  background-color:blue !important;
+  color: blue !important;
+}
+
+/* Optional: Add a subtle transition */
+.vis-navigation .vis-button {
+  transition: all 0.2s ease;
+}
