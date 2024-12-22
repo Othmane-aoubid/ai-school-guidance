@@ -19,6 +19,7 @@ import ContentLibraryView from "../views/ContentLibraryView.vue";
 import ResumeBuilderView from "../views/ResumeBuilderView.vue";
 import CareerPathPage from "../components/CareerPathPage.vue";
 import SkillAssessmentQuiz from "../components/SkillAssessmentQuiz.vue";
+import CareerMachtingResultView from "../views/CareerMachtingResultView.vue";
 
 const routes = [
   {
@@ -128,6 +129,12 @@ const routes = [
       title: "Skill Assessment",
       requiresAuth: true,
     },
+  },
+  {
+    path: "/career-matching-results",
+    name: "Career-Matching-Results",
+    component: CareerMachtingResultView,
+    meta: { requiresAuth: true },
   },
 ];
 

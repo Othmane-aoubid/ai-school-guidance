@@ -1,27 +1,25 @@
-import { defineStore } from 'pinia';
-import { ref, watchEffect } from 'vue';
-import { auth } from '../firebase/config';
-import { 
+import { defineStore } from "pinia";
+import { ref, watchEffect } from "vue";
+import { auth } from "../firebase/config";
+import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
   onAuthStateChanged,
   setPersistence,
-  browserLocalPersistence
-} from 'firebase/auth';
+  browserLocalPersistence,
+} from "firebase/auth";
 
-export const useAuthStore = defineStore('auth', () => {
+export const useAuthStore = defineStore("auth", () => {
   const user = ref(null);
   const loading = ref(false);
   const error = ref(null);
 
   // Set Firebase authentication persistence to local
   setPersistence(auth, browserLocalPersistence)
-    .then(() => {
-      
-    })
+    .then(() => {})
     .catch((err) => {
-      console.error('Error setting persistence:', err);
+      console.error("Error setting persistence:", err);
     });
 
   // Listen for authentication state changes (even after refresh)
@@ -55,7 +53,11 @@ export const useAuthStore = defineStore('auth', () => {
   const login = async (email, password) => {
     try {
       loading.value = true;
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       user.value = userCredential.user;
       error.value = null;
     } catch (err) {
@@ -68,7 +70,11 @@ export const useAuthStore = defineStore('auth', () => {
   const register = async (email, password) => {
     try {
       loading.value = true;
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       user.value = userCredential.user;
       error.value = null;
     } catch (err) {
@@ -94,7 +100,6 @@ export const useAuthStore = defineStore('auth', () => {
     login,
     register,
     signOut,
-    initializeAuth
+    initializeAuth,
   };
 });
-
