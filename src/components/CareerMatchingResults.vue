@@ -209,125 +209,125 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebase/config"; // Make sure this import path is correct
-import { useLangflow } from "../composables/useLangflow";
-import langflowApi from "../utils/langflowApi"; // Adjust the path based on your structure
+// import { useLangflow } from "../composables/useLangflow";
+// import langflowApi from "../utils/langflowApi"; // Adjust the path based on your structure
 
-const { isLoading, error, response, runAIGuidance } = useLangflow(
-  import.meta.env.VITE_LANGFLOW_TOKEN
-);
+// const { isLoading, error, response, runAIGuidance } = useLangflow(
+//   import.meta.env.VITE_LANGFLOW_TOKEN
+// );
 
-class LangflowClient {
-  constructor(baseURL, applicationToken) {
-    this.baseURL = baseURL;
-    this.applicationToken = applicationToken;
-  }
-  async post(endpoint, body, headers = { "Content-Type": "application/json" }) {
-    headers["Authorization"] = `Bearer ${this.applicationToken}`;
-    headers["Content-Type"] = "application/json";
-    const url = `${this.baseURL}${endpoint}`;
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(body),
-      });
+// class LangflowClient {
+//   constructor(baseURL, applicationToken) {
+//     this.baseURL = baseURL;
+//     this.applicationToken = applicationToken;
+//   }
+//   async post(endpoint, body, headers = { "Content-Type": "application/json" }) {
+//     headers["Authorization"] = `Bearer ${this.applicationToken}`;
+//     headers["Content-Type"] = "application/json";
+//     const url = `${this.baseURL}${endpoint}`;
+//     try {
+//       const response = await fetch(url, {
+//         method: "POST",
+//         headers: headers,
+//         body: JSON.stringify(body),
+//       });
 
-      const responseMessage = await response.json();
-      if (!response.ok) {
-        throw new Error(
-          `${response.status} ${response.statusText} - ${JSON.stringify(
-            responseMessage
-          )}`
-        );
-      }
-      return responseMessage;
-    } catch (error) {
-      console.error("Request Error:", error.message);
-      throw error;
-    }
-  }
+//       const responseMessage = await response.json();
+//       if (!response.ok) {
+//         throw new Error(
+//           `${response.status} ${response.statusText} - ${JSON.stringify(
+//             responseMessage
+//           )}`
+//         );
+//       }
+//       return responseMessage;
+//     } catch (error) {
+//       console.error("Request Error:", error.message);
+//       throw error;
+//     }
+//   }
 
-  async initiateSession(
-    flowId,
-    langflowId,
-    inputValue,
-    inputType = "chat",
-    outputType = "chat",
-    stream = false,
-    tweaks = {}
-  ) {
-    const endpoint = `/lf/${langflowId}/api/v1/run/${flowId}?stream=${stream}`;
-    return this.post(endpoint, {
-      input_value: inputValue,
-      input_type: inputType,
-      output_type: outputType,
-      tweaks: tweaks,
-    });
-  }
+//   async initiateSession(
+//     flowId,
+//     langflowId,
+//     inputValue,
+//     inputType = "chat",
+//     outputType = "chat",
+//     stream = false,
+//     tweaks = {}
+//   ) {
+//     const endpoint = `/lf/${langflowId}/api/v1/run/${flowId}?stream=${stream}`;
+//     return this.post(endpoint, {
+//       input_value: inputValue,
+//       input_type: inputType,
+//       output_type: outputType,
+//       tweaks: tweaks,
+//     });
+//   }
 
-  handleStream(streamUrl, onUpdate, onClose, onError) {
-    const eventSource = new EventSource(streamUrl);
+//   handleStream(streamUrl, onUpdate, onClose, onError) {
+//     const eventSource = new EventSource(streamUrl);
 
-    eventSource.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      onUpdate(data);
-    };
+//     eventSource.onmessage = (event) => {
+//       const data = JSON.parse(event.data);
+//       onUpdate(data);
+//     };
 
-    eventSource.onerror = (event) => {
-      console.error("Stream Error:", event);
-      onError(event);
-      eventSource.close();
-    };
+//     eventSource.onerror = (event) => {
+//       console.error("Stream Error:", event);
+//       onError(event);
+//       eventSource.close();
+//     };
 
-    eventSource.addEventListener("close", () => {
-      onClose("Stream closed");
-      eventSource.close();
-    });
+//     eventSource.addEventListener("close", () => {
+//       onClose("Stream closed");
+//       eventSource.close();
+//     });
 
-    return eventSource;
-  }
+//     return eventSource;
+//   }
 
-  async runFlow(
-    flowIdOrName,
-    langflowId,
-    inputValue,
-    inputType = "chat",
-    outputType = "chat",
-    tweaks = {},
-    stream = false,
-    onUpdate,
-    onClose,
-    onError
-  ) {
-    try {
-      const initResponse = await this.initiateSession(
-        flowIdOrName,
-        langflowId,
-        inputValue,
-        inputType,
-        outputType,
-        stream,
-        tweaks
-      );
-      console.log("Init Response:", initResponse);
-      if (
-        stream &&
-        initResponse &&
-        initResponse.outputs &&
-        initResponse.outputs[0].outputs[0].artifacts.stream_url
-      ) {
-        const streamUrl =
-          initResponse.outputs[0].outputs[0].artifacts.stream_url;
-        console.log(`Streaming from: ${streamUrl}`);
-        this.handleStream(streamUrl, onUpdate, onClose, onError);
-      }
-      return initResponse;
-    } catch (error) {
-      console.error("Error running flow:", error);
-      onError("Error initiating session");
-    }
-  }
-}
+//   async runFlow(
+//     flowIdOrName,
+//     langflowId,
+//     inputValue,
+//     inputType = "chat",
+//     outputType = "chat",
+//     tweaks = {},
+//     stream = false,
+//     onUpdate,
+//     onClose,
+//     onError
+//   ) {
+//     try {
+//       const initResponse = await this.initiateSession(
+//         flowIdOrName,
+//         langflowId,
+//         inputValue,
+//         inputType,
+//         outputType,
+//         stream,
+//         tweaks
+//       );
+//       console.log("Init Response:", initResponse);
+//       if (
+//         stream &&
+//         initResponse &&
+//         initResponse.outputs &&
+//         initResponse.outputs[0].outputs[0].artifacts.stream_url
+//       ) {
+//         const streamUrl =
+//           initResponse.outputs[0].outputs[0].artifacts.stream_url;
+//         console.log(`Streaming from: ${streamUrl}`);
+//         this.handleStream(streamUrl, onUpdate, onClose, onError);
+//       }
+//       return initResponse;
+//     } catch (error) {
+//       console.error("Error running flow:", error);
+//       onError("Error initiating session");
+//     }
+//   }
+// }
 
 export default {
   name: "CareerMatchingResults",
@@ -647,105 +647,106 @@ export default {
       }
     },
     parseCareerRecommendations(text) {
-      try {
-        // If text is already a string, use it directly
-        const textToProcess =
-          typeof text === "string" ? text : text?.text || "";
+      console.log("text")
+      // try {
+      //   // If text is already a string, use it directly
+      //   const textToProcess =
+      //     typeof text === "string" ? text : text?.text || "";
 
-        // Extract JSON from the markdown code block
-        const jsonMatch = textToProcess.match(/```(?:json)?\n([\s\S]*?)\n```/);
-        if (jsonMatch && jsonMatch[1]) {
-          const data = JSON.parse(jsonMatch[1]);
-          // Map the recommendations to match our display format
-          return data.recommendations.map((rec) => ({
-            title: rec.career,
-            description: rec.rationale,
-            match_score: rec.match_score,
-          }));
-        }
-        return [];
-      } catch (err) {
-        return [];
-      }
+      //   // Extract JSON from the markdown code block
+      //   const jsonMatch = textToProcess.match(/```(?:json)?\n([\s\S]*?)\n```/);
+      //   if (jsonMatch && jsonMatch[1]) {
+      //     const data = JSON.parse(jsonMatch[1]);
+      //     // Map the recommendations to match our display format
+      //     return data.recommendations.map((rec) => ({
+      //       title: rec.career,
+      //       description: rec.rationale,
+      //       match_score: rec.match_score,
+      //     }));
+      //   }
+      //   return [];
+      // } catch (err) {
+      //   return [];
+      // }
     },
     async getGuidance() {
       console.log("Getting guidance ...........");
 
-      const applicationToken = import.meta.env.VITE_LANGFLOW_TOKEN; // Using the environment variable
+      // const applicationToken = import.meta.env.VITE_LANGFLOW_TOKEN; // Using the environment variable
 
-      // Prepare the data to send
-      const data = {
-        input_value: JSON.stringify({
-          career: {
-            motivation:
-              this.storedResults?.personalData?.motivation ||
-              "Motivation Example",
-            workStyle:
-              this.storedResults?.personalData?.workStyle ||
-              "Work Style Example",
-            workValues: Array.isArray(
-              this.storedResults?.personalData?.careerInterests
-            )
-              ? this.storedResults.personalData.careerInterests.join(", ")
-              : "Work Values Example",
-            preferredEnvironment:
-              this.storedResults?.careerData?.preferredEnvironments?.join(
-                ", "
-              ) || "Remote",
-            salaryExpectation:
-              this.storedResults?.careerData?.salaryExpectation ||
-              "Not specified",
-          },
-          education: {
-            level: this.storedResults?.educationData?.level || "Bachelor's",
-            field:
-              this.storedResults?.educationData?.field || "Computer Science",
-            experience: this.storedResults?.educationData?.experience || 0,
-          },
-          skills: this.storedResults?.personalData?.selectedSkills || [
-            "Skill 1",
-            "Skill 2",
-          ],
-        }),
-        output_type: "chat",
-        input_type: "chat",
-        tweaks: {
-          "ChatInput-b338Z": {},
-          "ChatOutput-S2vI1": {},
-          "TavilyAISearch-2UI4W": {},
-          "Agent-SLQ37": {},
-          "GoogleGenerativeAIModel-t9r4j": {},
-          "GoogleGenerativeAIModel-Fyxgj": {},
-          "StructuredOutputComponent-XlJOE": {},
-          "ParseData-Jh2YM": {},
-        },
-      };
+      // // Prepare the data to send
+      // const data = {
+      //   input_value: JSON.stringify({
+      //     career: {
+      //       motivation:
+      //         this.storedResults?.personalData?.motivation ||
+      //         "Motivation Example",
+      //       workStyle:
+      //         this.storedResults?.personalData?.workStyle ||
+      //         "Work Style Example",
+      //       workValues: Array.isArray(
+      //         this.storedResults?.personalData?.careerInterests
+      //       )
+      //         ? this.storedResults.personalData.careerInterests.join(", ")
+      //         : "Work Values Example",
+      //       preferredEnvironment:
+      //         this.storedResults?.careerData?.preferredEnvironments?.join(
+      //           ", "
+      //         ) || "Remote",
+      //       salaryExpectation:
+      //         this.storedResults?.careerData?.salaryExpectation ||
+      //         "Not specified",
+      //     },
+      //     education: {
+      //       level: this.storedResults?.educationData?.level || "Bachelor's",
+      //       field:
+      //         this.storedResults?.educationData?.field || "Computer Science",
+      //       experience: this.storedResults?.educationData?.experience || 0,
+      //     },
+      //     skills: this.storedResults?.personalData?.selectedSkills || [
+      //       "Skill 1",
+      //       "Skill 2",
+      //     ],
+      //   }),
+      //   output_type: "chat",
+      //   input_type: "chat",
+      //   tweaks: {
+      //     "ChatInput-b338Z": {},
+      //     "ChatOutput-S2vI1": {},
+      //     "TavilyAISearch-2UI4W": {},
+      //     "Agent-SLQ37": {},
+      //     "GoogleGenerativeAIModel-t9r4j": {},
+      //     "GoogleGenerativeAIModel-Fyxgj": {},
+      //     "StructuredOutputComponent-XlJOE": {},
+      //     "ParseData-Jh2YM": {},
+      //   },
+      // };
 
-      try {
-        this.isLoading = true;
-        this.error = null;
+      // try {
+      //   this.isLoading = true;
+      //   this.error = null;
 
-        // Use the Langflow API client to make the request
-        const response = await langflowApi.runCareerPathRecommendation(
-          data,
-          applicationToken
-        );
+      //   // Use the Langflow API client to make the request
+      //   const response = await langflowApi.runCareerPathRecommendation(
+      //     data,
+      //     applicationToken
+      //   );
 
-        if (response && response.outputs) {
-          this.recommendedCareers = response.outputs[0].outputs.map((rec) => ({
-            title: rec.career,
-            description: rec.rationale,
-            growth: `${(rec.match_score * 100).toFixed(0)}%`,
-            salaryRange: "Not available",
-            requiredSkills: ["Not available"],
-          }));
-        }
-      } catch (error) {
-        this.error = `Failed to get guidance: ${error.message}`;
-        console.error("Error:", error);
-      } finally {
-        this.isLoading = false;
-      }
+      //   if (response && response.outputs) {
+      //     this.recommendedCareers = response.outputs[0].outputs.map((rec) => ({
+      //       title: rec.career,
+      //       description: rec.rationale,
+      //       growth: `${(rec.match_score * 100).toFixed(0)}%`,
+      //       salaryRange: "Not available",
+      //       requiredSkills: ["Not available"],
+      //     }));
+      //   }
+      // } catch (error) {
+      //   this.error = `Failed to get guidance: ${error.message}`;
+      //   console.error("Error:", error);
+      // } finally {
+      //   this.isLoading = false;
+      // }
     },
     async careerSuggestions() {},
   },
