@@ -4,7 +4,8 @@
     <div class="flex-1 flex flex-col overflow-hidden">
       <TopNavigation />
       <div class="bg-gray-50 py-8 px-4 sm:px-6 lg:px-8" style="overflow-y: scroll">
-        <CreerMatching />
+        <!-- <CreerMatching /> -->
+        <AIGuidance/> 
         <!-- <div class="max-w-7xl mx-auto">
           <div class="text-center mb-12">
             <h1 class="text-3xl font-bold text-gray-900 sm:text-4xl">
@@ -60,6 +61,7 @@ import { useQuestionnaire } from "../useQuestionnaire";
 import Sidebar from "../components/Sidebar.vue";
 import TopNavigation from "../components/TopNavigation.vue";
 import CreerMatching from "../components/CreerMatching.vue";
+import AIGuidance from "../components/AIGuidance.vue";
 
 export default {
   name: "QuestionnaireForm",
@@ -68,6 +70,7 @@ export default {
     Sidebar,
     TopNavigation,
     CreerMatching,
+    AIGuidance
   },
   data() {
     const { sections, answers } = useQuestionnaire();

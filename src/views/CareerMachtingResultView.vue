@@ -3,7 +3,8 @@
     <Sidebar />
     <div class="flex-1 flex flex-col overflow-auto">
       <TopNavigation />
-      <CareerMatchingResults />
+      <!-- <CareerMatchingResults /> -->
+      <AIGuidance/> 
     </div>
   </div>
 </template>
@@ -12,6 +13,7 @@
 import Sidebar from "../components/Sidebar.vue";
 import TopNavigation from "../components/TopNavigation.vue";
 import CareerMatchingResults from "../components/CareerMatchingResults.vue";
+import AIGuidance from "../components/AIGuidance.vue";
 
 export default {
   name: "CareerMachtingResultView",
@@ -20,6 +22,7 @@ export default {
     Sidebar,
     TopNavigation,
     CareerMatchingResults,
+    AIGuidance
   },
 
   props: {},
